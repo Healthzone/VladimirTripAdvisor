@@ -1,6 +1,6 @@
 ﻿namespace VladimirTripAdvisor.Models
 {
-    public class Application
+    public class ApplicationModel
     {
         [Key]
         public long Id { get; set; }
@@ -12,8 +12,8 @@
         public string ApplicationData { get; set; }
 
         [Column("id_user")]
-        [ForeignKey("User")]
         public long UserId { get; set; }
-        public User User { get; set; }
+        [ForeignKey("UserId")]
+        public virtual UserModel User { get; set; }
     }
 }

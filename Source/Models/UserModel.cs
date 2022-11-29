@@ -2,7 +2,7 @@
 
 namespace VladimirTripAdvisor.Models
 {
-    public class User
+    public class UserModel
     {
         [Key]
         public long Id { get; set; }

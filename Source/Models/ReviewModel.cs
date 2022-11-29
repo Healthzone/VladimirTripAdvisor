@@ -2,7 +2,7 @@
 
 namespace VladimirTripAdvisor.Models
 {
-    public class Review
+    public class ReviewModel
     {
         [Key]
         public long Id { get; set; }
@@ -16,13 +16,13 @@ namespace VladimirTripAdvisor.Models
         public int Score { get; set; }
 
         [Column("id_object")]
-        [ForeignKey("ObjectOfVisit")]
         public long ObjectId { get; set; }
-        public ObjectOfVisit? ObjectOfVisit { get; set; }
+        [ForeignKey("ObjectId")]
+        public virtual ObjectOfVisitModel? ObjectOfVisit { get; set; }
 
-        [ForeignKey("User")]
         [Column("id_user")]
         public long UserId { get; set; }
-        public User User { get; set; }
+        [ForeignKey("UserId")]
+        public virtual UserModel User { get; set; }
     }
 }

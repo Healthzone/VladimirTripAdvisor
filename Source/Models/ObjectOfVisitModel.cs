@@ -1,7 +1,7 @@
 ﻿namespace VladimirTripAdvisor.Models
 {
     [Table("object_of_visit")]
-    public class ObjectOfVisit
+    public class ObjectOfVisitModel
     {
         [Key]
         public long Id { get; set; }
@@ -33,8 +33,8 @@
         public string? AdditionalAddressInfo { get; set; }
 
         [Column("id_owner")]
-        [ForeignKey("User")]
         public long? IdOwner { get; set; }
-        public User? User { get; set; }
+        [ForeignKey("IdOwner")]
+        public UserModel? User { get; set; }
     }
 }

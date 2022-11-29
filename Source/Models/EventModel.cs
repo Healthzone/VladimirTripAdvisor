@@ -1,6 +1,6 @@
 ﻿namespace VladimirTripAdvisor.Models
 {
-    public class Event
+    public class EventModel
     {
         [Key]
         public long Id { get; set; }
@@ -16,13 +16,13 @@
         public string TelegramLink { get; set; }
 
         [Column("id_creator")]
-        [ForeignKey("User")]
         public long CreatorId { get; set; }
-        public User User { get; set; }
+        [ForeignKey("CreatorId")]
+        public virtual UserModel User { get; set; }
 
         [Column("id_place")]
-        [ForeignKey("ObjectOfVisit")]
         public long PlaceId { get; set; }
-        public ObjectOfVisit ObjectOfVisit { get; set; }
+        [ForeignKey("PlaceId")]
+        public virtual ObjectOfVisitModel ObjectOfVisit { get; set; }
     }
 }

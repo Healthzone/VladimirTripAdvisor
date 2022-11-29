@@ -11,21 +11,21 @@ namespace VladimirTripAdvisor.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Image>(entity =>
+            modelBuilder.Entity<ImageModel>(entity =>
             {
                 entity.Property(x => x.ImageByte).HasColumnType("longblob");
             });
-            modelBuilder.Entity<Application>(entity =>
+            modelBuilder.Entity<ApplicationModel>(entity =>
             {
                 entity.Property(x => x.ApplicationData).HasColumnType("JSON");
             });
         }
 
-        public DbSet<User> User { get; set; }
-        public DbSet<ObjectOfVisit> ObjectOfVisit { get; set; }
-        public DbSet<Image> Image{ get; set; }
-        public DbSet<Review> Review { get; set; }
-        public DbSet<Application> Application { get; set; }
-        public DbSet<Event> Event { get; set; }
+        public DbSet<UserModel> User { get; set; }
+        public DbSet<ObjectOfVisitModel> ObjectOfVisit { get; set; }
+        public DbSet<ImageModel> Image{ get; set; }
+        public DbSet<ReviewModel> Review { get; set; }
+        public DbSet<ApplicationModel> Application { get; set; }
+        public DbSet<EventModel> Event { get; set; }
     }
 }
