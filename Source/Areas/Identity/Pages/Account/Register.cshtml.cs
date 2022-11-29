@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using VladimirTripAdvisor.Models;
 
 namespace VladimirTripAdvisor.Areas.Identity.Pages.Account
 {
@@ -29,14 +30,17 @@ namespace VladimirTripAdvisor.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager)
         {
+            _roleManager = roleManager;
             _userManager = userManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
@@ -97,11 +101,21 @@ namespace VladimirTripAdvisor.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            public string Name{ get; set; }
+            public string Surname{ get; set; }
         }
 
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            if(!await _roleManager.RoleExistsAsync(WC.AdminRole))
+            {
+                await _roleManager.CreateAsync(new IdentityRole(WC.AdminRole));
+                await _roleManager.CreateAsync(new IdentityRole(WC.OwnerRole));
+                await _roleManager.CreateAsync(new IdentityRole(WC.UserRole));
+            }
+
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -112,7 +126,8 @@ namespace VladimirTripAdvisor.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = CreateUser();
+                //var user = CreateUser();
+                var user = new UserModel { UserName = Input.Email, Email= Input.Email, Name = Input.Name, Surname = Input.Surname};
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -120,6 +135,15 @@ namespace VladimirTripAdvisor.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    if (User.IsInRole(WC.AdminRole))
+                    {
+                        //Из под админки создаем новую админку
+                        await _userManager.AddToRoleAsync(user, WC.AdminRole);
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, WC.UserRole);
+                    }
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
@@ -140,7 +164,15 @@ namespace VladimirTripAdvisor.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        if(!User.IsInRole(WC.AdminRole))
+                        {
+                            await _signInManager.SignInAsync(user, isPersistent: false);
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index");
+                        }
+                        
                         return LocalRedirect(returnUrl);
                     }
                 }

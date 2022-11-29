@@ -13,7 +13,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     {
         options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
     });
-builder.Services.AddDefaultIdentity<IdentityUser>()
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddDefaultTokenProviders().AddDefaultUI()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 var app = builder.Build();
 
