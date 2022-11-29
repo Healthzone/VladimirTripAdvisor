@@ -1,9 +1,10 @@
-﻿using System.Reflection.Metadata;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System.Reflection.Metadata;
 using VladimirTripAdvisor.Models;
 
 namespace VladimirTripAdvisor.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -11,6 +12,7 @@ namespace VladimirTripAdvisor.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<ImageModel>(entity =>
             {
                 entity.Property(x => x.ImageByte).HasColumnType("longblob");
