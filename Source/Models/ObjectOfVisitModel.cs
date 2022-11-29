@@ -33,7 +33,7 @@
         public string? AdditionalAddressInfo { get; set; }
 
         [Column("id_owner")]
-        public long? IdOwner { get; set; }
+        public string? IdOwner { get; set; }
         [ForeignKey("IdOwner")]
         public UserModel? User { get; set; }
     }

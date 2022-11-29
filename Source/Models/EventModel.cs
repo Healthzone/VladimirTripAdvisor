@@ -16,7 +16,7 @@
         public string TelegramLink { get; set; }
 
         [Column("id_creator")]
-        public long CreatorId { get; set; }
+        public string CreatorId { get; set; }
         [ForeignKey("CreatorId")]
         public virtual UserModel User { get; set; }
 

@@ -21,7 +21,7 @@ namespace VladimirTripAdvisor.Models
         public virtual ObjectOfVisitModel? ObjectOfVisit { get; set; }
 
         [Column("id_user")]
-        public long UserId { get; set; }
+        public string UserId { get; set; }
         [ForeignKey("UserId")]
         public virtual UserModel User { get; set; }
     }

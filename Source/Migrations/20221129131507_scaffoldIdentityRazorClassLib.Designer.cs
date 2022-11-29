@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VladimirTripAdvisor.Data;
 
@@ -10,9 +11,10 @@ using VladimirTripAdvisor.Data;
 namespace VladimirTripAdvisor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221129131507_scaffoldIdentityRazorClassLib")]
+    partial class scaffoldIdentityRazorClassLib
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,10 +82,6 @@ namespace VladimirTripAdvisor.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
@@ -134,8 +132,6 @@ namespace VladimirTripAdvisor.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -236,9 +232,8 @@ namespace VladimirTripAdvisor.Migrations
                         .HasColumnType("int")
                         .HasColumnName("application_type");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)")
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint")
                         .HasColumnName("id_user");
 
                     b.HasKey("Id");
@@ -254,9 +249,8 @@ namespace VladimirTripAdvisor.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    b.Property<string>("CreatorId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)")
+                    b.Property<long>("CreatorId")
+                        .HasColumnType("bigint")
                         .HasColumnName("id_creator");
 
                     b.Property<DateTime>("EndDate")
@@ -319,8 +313,8 @@ namespace VladimirTripAdvisor.Migrations
                         .HasColumnType("varchar(150)")
                         .HasColumnName("additional_address_info");
 
-                    b.Property<string>("IdOwner")
-                        .HasColumnType("varchar(255)")
+                    b.Property<long?>("IdOwner")
+                        .HasColumnType("bigint")
                         .HasColumnName("id_owner");
 
                     b.Property<string>("Latitude")
@@ -381,9 +375,8 @@ namespace VladimirTripAdvisor.Migrations
                         .HasColumnType("int")
                         .HasColumnName("score");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)")
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint")
                         .HasColumnName("id_user");
 
                     b.HasKey("Id");
@@ -397,19 +390,36 @@ namespace VladimirTripAdvisor.Migrations
 
             modelBuilder.Entity("VladimirTripAdvisor.Models.UserModel", b =>
                 {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("AccountType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Login")
+                        .IsRequired()
+                        .HasMaxLength(45)
+                        .HasColumnType("varchar(45)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
+
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.HasDiscriminator().HasValue("UserModel");
+                    b.HasKey("Id");
+
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
