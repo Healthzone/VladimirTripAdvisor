@@ -5,6 +5,13 @@ namespace VladimirTripAdvisor.Controllers
 {
     public class ObjectController : Controller
     {
+
+        private readonly ApplicationDbContext _db;
+        public ObjectController(ApplicationDbContext db)
+        {
+            _db = db;
+        }
+
         // GET: ObjectController
         [HttpGet]
         public ActionResult Index()
