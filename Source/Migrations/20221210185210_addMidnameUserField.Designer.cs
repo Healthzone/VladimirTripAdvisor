@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VladimirTripAdvisor.Data;
 
@@ -10,9 +11,10 @@ using VladimirTripAdvisor.Data;
 namespace VladimirTripAdvisor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221210185210_addMidnameUserField")]
+    partial class addMidnameUserField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -227,10 +229,6 @@ namespace VladimirTripAdvisor.Migrations
                         .IsRequired()
                         .HasColumnType("JSON")
                         .HasColumnName("application_data");
-
-                    b.Property<int>("ApplicationStatus")
-                        .HasColumnType("int")
-                        .HasColumnName("application_status");
 
                     b.Property<int>("ApplicationType")
                         .HasColumnType("int")

@@ -1,12 +1,16 @@
-﻿namespace VladimirTripAdvisor.Models
+﻿using VladimirTripAdvisor.Logic.Application;
+
+namespace VladimirTripAdvisor.Models
 {
-    public class ApplicationModel
+    public class ApplicationModelDB
     {
         [Key]
         public long Id { get; set; }
 
         [Column("application_type")]
-        public int ApplicationType { get; set; }
+        public ApplicationType ApplicationType { get; set; }
+        [Column("application_status")]
+        public ApplicationStatus ApplicationStatus { get; set; }
 
         [Column("application_data")]
         public string ApplicationData { get; set; }

@@ -11,5 +11,8 @@ namespace VladimirTripAdvisor.Models
 
         [StringLength(maximumLength: 50)]
         public string Surname { get; set; }
+
+        [StringLength(maximumLength: 50)]
+        public string? Midname { get; set; }
     }
 }
