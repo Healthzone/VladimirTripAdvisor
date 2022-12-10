@@ -31,6 +31,15 @@
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Создать администратора</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Application" asp-action="CheckApplication">Список заявок на апгрейд</a>
+                            </li>
+                        }
+                        @if (User.IsInRole(WC.UserRole))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Application" asp-action="UpgradeAccount">Улучшить аккаунт</a>
+                            </li>
                         }
                     </ul>
                 </div>

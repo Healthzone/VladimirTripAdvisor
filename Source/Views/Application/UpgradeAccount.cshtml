@@ -1,0 +1,54 @@
+﻿@model VladimirTripAdvisor.ViewModels.ApplicationDataViewModel
+@{
+    ViewData["Title"] = "Создание заявления";
+}
+<div class="col-12 text-success text-center py-4">
+    <form method="post" asp-action="UpgradeAccount">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row form-group">
+            <h2 class="col-12 text-success text-center py-4">Заявление на улучшение статуса аккаунта до владельца.</h2>
+            <div class="col-10 offset-2">
+                <div class="card">
+                    <div class="card-body px-lg-5 pt-4">
+                        <input asp-for="UserID" type="hidden" class="form-control">
+                        <div class="py-2">
+                            <input asp-for="Name" type="text" class="form-control" placeholder="Ваше имя">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="py-2">
+                            <input asp-for="Surname" type="text" class="form-control" placeholder="Ваша фамилия">
+                            <span asp-validation-for="Surname" class="text-danger"></span>
+                        </div>
+                        <div class="py-2">
+                            <input asp-for="Midname" type="text" class="form-control" placeholder="Ваше отчество, если отсутствует, оставьте поле пустым">
+                            <span asp-validation-for="Midname" class="text-danger"></span>
+                        </div>
+                        <div class="py-2">
+                            <input asp-for="Email" type="email" class="form-control" placeholder="Электронная почта">
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="py-2">
+                            <input asp-for="CompanyName" type="text" class="form-control" placeholder="Наименование организации">
+                            <span asp-validation-for="CompanyName" class="text-danger"></span>
+                        </div>
+                        <div class="py-2">
+                            <input asp-for="PhoneNumber" type="text" class="form-control" placeholder="Номер телефона организации">
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                        <div class="py-2">
+                            <textarea asp-for="AdditionalInfo" rows="10" class="form-control" placeholder="Опишите здесь различную информацию для положительного рассмотрения заявления. Например, есть ли у вас заведения, различные места для посещения"></textarea>
+                            <span asp-validation-for="AdditionalInfo" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="py-2">
+                        <button type="submit" class="btn btn-success form-control">Отправить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
