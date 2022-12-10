@@ -110,6 +110,9 @@ namespace VladimirTripAdvisor.Areas.Identity.Pages.Account
             [Display(Name = "Фамилия")]
             public string Surname{ get; set; }
 
+            [Display(Name = "Отчество")]
+            public string Midname { get; set; }
+
             [Required(ErrorMessage = "Поле номер телефона обязательно для заполнения")]
             public string PhoneNumber{ get; set; }
         }
@@ -135,7 +138,8 @@ namespace VladimirTripAdvisor.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 //var user = CreateUser();
-                var user = new UserModel { UserName = Input.Email, Email= Input.Email, Name = Input.Name, Surname = Input.Surname, PhoneNumber = Input.PhoneNumber};
+                var user = new UserModel { UserName = Input.Email, Email= Input.Email, Name = Input.Name,
+                    Surname = Input.Surname, Midname = Input.Midname, PhoneNumber = Input.PhoneNumber};
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);

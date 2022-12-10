@@ -28,6 +28,10 @@
                             <span asp-validation-for="Input.Surname" class="text-danger"></span>
                         </div>
                         <div class="py-2">
+                            <input asp-for="Input.Midname" placeholder="Фамилия" class="form-control" aria-required="true" />
+                            <span asp-validation-for="Input.Midname" class="text-danger"></span>
+                        </div>
+                        <div class="py-2">
                             <input asp-for="Input.Email" placeholder="Электронная почта" type="email" class="form-control" aria-required="true" />
                             <span asp-validation-for="Input.Email" class="text-danger"></span>
                         </div>
