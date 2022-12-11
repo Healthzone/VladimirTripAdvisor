@@ -1,0 +1,109 @@
+﻿@model VladimirTripAdvisor.ViewModels.ApplicationAccountViewModel
+@{
+    ViewData["Title"] = "Заявка";
+}
+<div class="col-12 text-success text-center py-4">
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row form-group">
+            <h2 class="col-12 text-success text-center py-4">Заявление на улучшение статуса аккаунта до владельца.</h2>
+            <div class="col-10 offset-2">
+                <div class="card">
+                    @if (Model.ApplicationStatus == Logic.Application.ApplicationStatus.Taked 
+                    || Model.ApplicationStatus == Logic.Application.ApplicationStatus.Processing
+                    || Model.ApplicationStatus == Logic.Application.ApplicationStatus.Created)
+                    {
+                        <div class="card-body px-lg-5 pt-4">
+                            <input asp-for="UserID" type="hidden" class="form-control">
+                            <input asp-for="ApplicationId" type="hidden" class="form-control">
+                            <div class="py-2">
+                                <input asp-for="Name" class="form-control" readonly placeholder="Имя">
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="py-2">
+                                <input asp-for="Surname" class="form-control" readonly placeholder="Фамилия">
+                                <span asp-validation-for="Surname" class="text-danger"></span>
+                            </div>
+                            <div class="py-2">
+                                <input asp-for="Midname" class="form-control" readonly placeholder="Отчество">
+                                <span asp-validation-for="Midname" class="text-danger"></span>
+                            </div>
+                            <div class="py-2">
+                                <input asp-for="Email" type="email" class="form-control" readonly placeholder="Отчество">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="py-2">
+                                <input asp-for="CompanyName" class="form-control" readonly placeholder="Отчество">
+                                <span asp-validation-for="CompanyName" class="text-danger"></span>
+                            </div>
+                            <div class="py-2">
+                                <input asp-for="PhoneNumber" class="form-control" readonly placeholder="Отчество">
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            </div>
+                            <div class="py-2">
+                                <textarea asp-for="AdditionalInfo" rows="10" readonly class="form-control" placeholder="Опишите здесь различную информацию для положительного рассмотрения заявления. Например, есть ли у вас заведения, различные места для посещения"></textarea>
+                                <span asp-validation-for="AdditionalInfo" class="text-danger"></span>
+                            </div>
+                            <div class="py-2">
+                                <textarea asp-for="AdminComment" rows="10" class="form-control" placeholder="Комментарий администратора"></textarea>
+                                <span asp-validation-for="AdminComment" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="py-2">
+                            <button type="submit" asp-action="SubmitApp" asp-route-Id="@Model.ApplicationId" class="btn btn-success form-control">Подтвердить</button>
+                            <button type="submit" asp-action="SendOnEditApp" class="btn btn-warning form-control">Отправить на доработку</button>
+                            <button type="submit" asp-action="DenyApp" asp-route-Id="@Model.ApplicationId" class="btn btn-danger form-control">Отклонить</button>
+                        </div>
+                    }
+                    else if (Model.ApplicationStatus == Logic.Application.ApplicationStatus.Edit)
+                    {
+                        <div class="card-body px-lg-5 pt-4">
+                            <input asp-for="UserID" type="hidden" class="form-control">
+                            <input asp-for="ApplicationId" type="hidden" class="form-control">
+                            <input asp-for="ApplicationStatus" type="hidden" class="form-control">
+                            <div class="py-2">
+                                <input asp-for="Name" class="form-control" placeholder="Имя">
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="py-2">
+                                <input asp-for="Surname" class="form-control" placeholder="Фамилия">
+                                <span asp-validation-for="Surname" class="text-danger"></span>
+                            </div>
+                            <div class="py-2">
+                                <input asp-for="Midname" class="form-control" placeholder="Отчество">
+                                <span asp-validation-for="Midname" class="text-danger"></span>
+                            </div>
+                            <div class="py-2">
+                                <input asp-for="Email" type="email" class="form-control" placeholder="Отчество">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="py-2">
+                                <input asp-for="CompanyName" class="form-control" placeholder="Отчество">
+                                <span asp-validation-for="CompanyName" class="text-danger"></span>
+                            </div>
+                            <div class="py-2">
+                                <input asp-for="PhoneNumber" class="form-control" placeholder="Отчество">
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            </div>
+                            <div class="py-2">
+                                <textarea asp-for="AdditionalInfo" rows="10" class="form-control" placeholder="Опишите здесь различную информацию для положительного рассмотрения заявления. Например, есть ли у вас заведения, различные места для посещения"></textarea>
+                                <span asp-validation-for="AdditionalInfo" class="text-danger"></span>
+                            </div>
+                            <div class="py-2">
+                                <textarea asp-for="AdminComment" rows="10" readonly class="form-control"></textarea>
+                                <span asp-validation-for="AdminComment" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="py-2">
+                            <button type="submit" asp-action="UpgradeAccountApplication" asp-route-Id="@Model.ApplicationId" class="btn btn-success form-control">Отправить</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,9 +1,9 @@
-﻿@model VladimirTripAdvisor.ViewModels.ApplicationDataViewModel
+﻿@model VladimirTripAdvisor.ViewModels.ApplicationAccountViewModel
 @{
     ViewData["Title"] = "Создание заявления";
 }
 <div class="col-12 text-success text-center py-4">
-    <form method="post" asp-action="UpgradeAccount">
+    <form method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="row form-group">
             <h2 class="col-12 text-success text-center py-4">Заявление на улучшение статуса аккаунта до владельца.</h2>
@@ -11,6 +11,7 @@
                 <div class="card">
                     <div class="card-body px-lg-5 pt-4">
                         <input asp-for="UserID" type="hidden" class="form-control">
+                        <input asp-for="ApplicationId" type="hidden" class="form-control">
                         <div class="py-2">
                             <input asp-for="Name" type="text" class="form-control" placeholder="Ваше имя">
                             <span asp-validation-for="Name" class="text-danger"></span>
@@ -41,7 +42,7 @@
                         </div>
                     </div>
                     <div class="py-2">
-                        <button type="submit" class="btn btn-success form-control">Отправить</button>
+                        <button type="submit" asp-action="UpgradeAccountApplication" class="btn btn-success form-control">Отправить</button>
                     </div>
                 </div>
             </div>

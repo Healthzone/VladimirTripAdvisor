@@ -18,7 +18,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name ="_LoginPartial" />
+                    <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">На главную</a>
@@ -35,10 +35,19 @@
                                 <a class="nav-link" asp-area="" asp-controller="Application" asp-action="CheckApplication">Список заявок на апгрейд</a>
                             </li>
                         }
-                        @if (User.IsInRole(WC.UserRole))
+                        @if (User.IsInRole(WC.UserRole) && !User.IsInRole(WC.OwnerRole))
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Application" asp-action="UpgradeAccount">Улучшить аккаунт</a>
+                                <a class="nav-link" asp-area="" asp-controller="Application" asp-action="CreateApplicationAccount">Улучшить аккаунт</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Application" asp-action="MyApplicationAccount">Список моих заявок</a>
+                            </li>
+                        }
+                        @if (User.IsInRole(WC.OwnerRole))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Application" asp-action="CreateApplicationObject">Добавить объект</a>
                             </li>
                         }
                     </ul>

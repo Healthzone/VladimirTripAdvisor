@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<VladimirTripAdvisor.Models.ApplicationModelDB>
 @{
-    ViewData["Title"] = "CheckApplication";
+    ViewData["Title"] = "Мои заявки";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -19,10 +19,7 @@
             <thead>
                 <tr>
                     <th>
-                        Фамилия
-                    </th>
-                    <th>
-                        Имя
+                        Тип заявки
                     </th>
                     <th>
                         Статус заявления
@@ -36,40 +33,34 @@
                     if (obj.ApplicationStatus == Logic.Application.ApplicationStatus.Created)
                     {
                         <tr>
-                            <td width="25%">@obj.User.Surname</td>
-                            <td width="25%">@obj.User.Name</td>
-                            <td width="25%">Создана</td>
+                            <td width="40%">Улучшение аккаунта</td>
+                            <td width="40%">Создана</td>
                             <td class="text-center">
-                                <div class="w-75 btn-group" role="group">
-                                    <a asp-controller="Application" asp-route-Id="@obj.Id" asp-action="ViewApp" class="btn btn-primary">
-                                        Принять
-                                    </a>
-                                </div>
                             </td>
                         </tr>
                     }
                     else if (obj.ApplicationStatus == Logic.Application.ApplicationStatus.Taked)
                     {
                         <tr>
-                            <td width="25%">@obj.User.Surname</td>
-                            <td width="25%">@obj.User.Name</td>
-                            <td width="25%">Принята администратором</td>
-                            <td class="text-center">
-                                <div class="w-75 btn-group" role="group">
-                                    <a asp-controller="Application" asp-route-Id="@obj.Id" asp-action="ViewApp" class="btn btn-primary">
-                                        Открыть
-                                    </a>
-                                </div>
-                            </td>
+                            <td width="40%">Улучшение аккаунта</td>
+                            <td width="40%">На рассмотрении администратором</td>
+                            <td class="text-center"></td>
                         </tr>
                     }
                     else if (obj.ApplicationStatus == Logic.Application.ApplicationStatus.Processing)
                     {
                         <tr>
-                            <td width="25%">@obj.User.Surname</td>
-                            <td width="25%">@obj.User.Name</td>
-                            <td width="25%">В обработке</td>
-                            <td class="text-center">
+                            <td width="40%">Улучшение аккаунта</td>
+                            <td width="40%">В обработке</td>
+                            <td></td>
+                        </tr>
+                    }
+                    else if (obj.ApplicationStatus == Logic.Application.ApplicationStatus.Edit)
+                    {
+                        <tr>
+                            <td width="40%">Улучшение аккаунта</td>
+                            <td width="40%">На редактировании</td>
+                            <td>
                                 <div class="w-75 btn-group" role="group">
                                     <a asp-controller="Application" asp-route-Id="@obj.Id" asp-action="ViewApp" class="btn btn-primary">
                                         Открыть
@@ -78,31 +69,20 @@
                             </td>
                         </tr>
                     }
-                    else if (obj.ApplicationStatus == Logic.Application.ApplicationStatus.Edit)
-                    {
-                        <tr>
-                            <td width="25%">@obj.User.Surname</td>
-                            <td width="25%">@obj.User.Name</td>
-                            <td width="25%">На редактировании</td>
-                            <td></td>
-                        </tr>
-                    }
                     else if (obj.ApplicationStatus == Logic.Application.ApplicationStatus.Done)
                     {
                         <tr>
-                            <td width="25%">@obj.User.Surname</td>
-                            <td width="25%">@obj.User.Name</td>
-                            <td width="25%">Обработана</td>
+                            <td width="40%">Улучшение аккаунта</td>
+                            <td width="40%">Принята</td>
                             <td></td>
                         </tr>
                     }
                     else if (obj.ApplicationStatus == Logic.Application.ApplicationStatus.Canceled)
                     {
                         <tr>
-                            <td width="25%">@obj.User.Surname</td>
-                            <td width="25%">@obj.User.Name</td>
+                            <td width="40%">Улучшение аккаунта</td>
                             <td>Отклонена администратором</td>
-                            <td></td>
+                            <td class="text-center"></td>
                         </tr>
                     }
 
