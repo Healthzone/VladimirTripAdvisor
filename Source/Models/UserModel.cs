@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace VladimirTripAdvisor.Models
 {
-    public class UserModel :IdentityUser
+    public class UserModel : IdentityUser
     {
         
         [StringLength(maximumLength:50)]

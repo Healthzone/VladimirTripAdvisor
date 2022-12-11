@@ -1,9 +1,15 @@
 ﻿
+using VladimirTripAdvisor.Logic.Application;
+
 namespace VladimirTripAdvisor.ViewModels
 {
-    public class ApplicationDataViewModel
+    public class ApplicationAccountViewModel
     {
         public string UserID { get; set; }
+
+        public long? ApplicationId { get; set; }
+
+        public ApplicationStatus? ApplicationStatus { get; set; }
 
         [Required(ErrorMessage = "Данное поле обязательно")]
         [MaxLength(50, ErrorMessage = "Данное поле не должно превышать 50 символов")]
@@ -30,6 +36,8 @@ namespace VladimirTripAdvisor.ViewModels
 
         [Required(ErrorMessage = "Данное поле обязательно")]
         public string? AdditionalInfo { get; set; }
+
+        public string? AdminComment { get; set; }
 
     }
 }

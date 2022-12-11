@@ -32,6 +32,10 @@
         [Column("additional_address_info")]
         public string? AdditionalAddressInfo { get; set; }
 
+        [StringLength(maximumLength: 150)]
+        [Column("place_url")]
+        public string? PlaceURL { get; set; }
+
         [Column("id_owner")]
         public string? IdOwner { get; set; }
         [ForeignKey("IdOwner")]
