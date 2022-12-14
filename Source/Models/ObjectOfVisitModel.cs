@@ -16,7 +16,7 @@
         public string PlaceDescription { get; set; }
 
         [Column("place_type")]
-        public int PlaceType { get; set; }
+        public PlaceType PlaceType { get; set; }
 
         [StringLength(maximumLength: 50)]
         public string Latitude { get; set; }

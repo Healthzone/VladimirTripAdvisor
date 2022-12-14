@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VladimirTripAdvisor.Data;
 
@@ -10,9 +11,10 @@ using VladimirTripAdvisor.Data;
 namespace VladimirTripAdvisor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221214132233_updatedAddApplicationColumnInImageModel")]
+    partial class updatedAddApplicationColumnInImageModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -301,7 +303,7 @@ namespace VladimirTripAdvisor.Migrations
                         .HasColumnType("longblob")
                         .HasColumnName("image_byte");
 
-                    b.Property<long?>("ObjectId")
+                    b.Property<long>("ObjectId")
                         .HasColumnType("bigint")
                         .HasColumnName("id_object");
 
@@ -518,7 +520,9 @@ namespace VladimirTripAdvisor.Migrations
 
                     b.HasOne("VladimirTripAdvisor.Models.ObjectOfVisitModel", "ObjectOfVisit")
                         .WithMany()
-                        .HasForeignKey("ObjectId");
+                        .HasForeignKey("ObjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Application");
 
