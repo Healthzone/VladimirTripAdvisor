@@ -40,6 +40,10 @@
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="Application" asp-action="CreateApplicationAccount">Улучшить аккаунт</a>
                             </li>
+
+                        }
+                        @if (User.IsInRole(WC.UserRole))
+                        {
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="Application" asp-action="MyApplicationAccount">Список моих заявок</a>
                             </li>
