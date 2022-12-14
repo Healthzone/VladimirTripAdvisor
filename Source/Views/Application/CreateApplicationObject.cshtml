@@ -34,6 +34,10 @@
                         <input asp-for="ApplicationId" type="hidden" class="form-control">
 
                         <div class="py-2">
+                            <select asp-for="PlaceType" class="form-control" asp-items="Html.GetEnumSelectList<PlaceType>()"></select>
+                            <span asp-validation-for="PlaceType" class="text-danger"></span>
+                        </div>
+                        <div class="py-2">
                             <input asp-for="Name" type="text" class="form-control" placeholder="Название места">
                             <span asp-validation-for="Name" class="text-danger"></span>
                         </div>

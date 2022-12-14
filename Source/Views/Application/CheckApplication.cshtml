@@ -25,6 +25,9 @@
                         Имя
                     </th>
                     <th>
+                        Тип заявления
+                    </th>
+                    <th>
                         Статус заявления
                     </th>
                     <th></th>
@@ -36,12 +39,20 @@
                     if (obj.ApplicationStatus == Logic.Application.ApplicationStatus.Created)
                     {
                         <tr>
-                            <td width="25%">@obj.User.Surname</td>
-                            <td width="25%">@obj.User.Name</td>
-                            <td width="25%">Создана</td>
+                            <td width="20%">@obj.User.Surname</td>
+                            <td width="20%">@obj.User.Name</td>
+                            @if (obj.ApplicationType == Logic.Application.ApplicationType.UpgradeAccount)
+                            {
+                                <td width="20%">Улучшение аккаунта</td>
+                            }
+                            else
+                            {
+                                <td width="20%">Добавление объекта</td>
+                            }
+                            <td width="20%">Создана</td>
                             <td class="text-center">
                                 <div class="w-75 btn-group" role="group">
-                                    <a asp-controller="Application" asp-route-Id="@obj.Id" asp-action="ViewApp" class="btn btn-primary">
+                                    <a asp-controller="Application" asp-route-Id="@obj.Id" asp-action="ViewApplication" class="btn btn-primary">
                                         Принять
                                     </a>
                                 </div>
@@ -51,12 +62,20 @@
                     else if (obj.ApplicationStatus == Logic.Application.ApplicationStatus.Taked)
                     {
                         <tr>
-                            <td width="25%">@obj.User.Surname</td>
-                            <td width="25%">@obj.User.Name</td>
-                            <td width="25%">Принята администратором</td>
+                            <td width="20%">@obj.User.Surname</td>
+                            <td width="20%">@obj.User.Name</td>
+                            @if (obj.ApplicationType == Logic.Application.ApplicationType.UpgradeAccount)
+                            {
+                                <td width="20%">Улучшение аккаунта</td>
+                            }
+                            else
+                            {
+                                <td width="20%">Добавление объекта</td>
+                            }
+                            <td width="20%">Принята администратором</td>
                             <td class="text-center">
                                 <div class="w-75 btn-group" role="group">
-                                    <a asp-controller="Application" asp-route-Id="@obj.Id" asp-action="ViewApp" class="btn btn-primary">
+                                    <a asp-controller="Application" asp-route-Id="@obj.Id" asp-action="ViewApplication" class="btn btn-primary">
                                         Открыть
                                     </a>
                                 </div>
@@ -66,12 +85,20 @@
                     else if (obj.ApplicationStatus == Logic.Application.ApplicationStatus.Processing)
                     {
                         <tr>
-                            <td width="25%">@obj.User.Surname</td>
-                            <td width="25%">@obj.User.Name</td>
-                            <td width="25%">В обработке</td>
+                            <td width="20%">@obj.User.Surname</td>
+                            <td width="20%">@obj.User.Name</td>
+                            @if (obj.ApplicationType == Logic.Application.ApplicationType.UpgradeAccount)
+                            {
+                                <td width="20%">Улучшение аккаунта</td>
+                            }
+                            else
+                            {
+                                <td width="20%">Добавление объекта</td>
+                            }
+                            <td width="20%">В обработке</td>
                             <td class="text-center">
                                 <div class="w-75 btn-group" role="group">
-                                    <a asp-controller="Application" asp-route-Id="@obj.Id" asp-action="ViewApp" class="btn btn-primary">
+                                    <a asp-controller="Application" asp-route-Id="@obj.Id" asp-action="ViewApplication" class="btn btn-primary">
                                         Открыть
                                     </a>
                                 </div>
@@ -81,26 +108,50 @@
                     else if (obj.ApplicationStatus == Logic.Application.ApplicationStatus.Edit)
                     {
                         <tr>
-                            <td width="25%">@obj.User.Surname</td>
-                            <td width="25%">@obj.User.Name</td>
-                            <td width="25%">На редактировании</td>
+                            <td width="20%">@obj.User.Surname</td>
+                            <td width="20%">@obj.User.Name</td>
+                            @if (obj.ApplicationType == Logic.Application.ApplicationType.UpgradeAccount)
+                            {
+                                <td width="20%">Улучшение аккаунта</td>
+                            }
+                            else
+                            {
+                                <td width="20%">Добавление объекта</td>
+                            }
+                            <td width="20%">На редактировании</td>
                             <td></td>
                         </tr>
                     }
                     else if (obj.ApplicationStatus == Logic.Application.ApplicationStatus.Done)
                     {
                         <tr>
-                            <td width="25%">@obj.User.Surname</td>
-                            <td width="25%">@obj.User.Name</td>
-                            <td width="25%">Обработана</td>
+                            <td width="20%">@obj.User.Surname</td>
+                            <td width="20%">@obj.User.Name</td>
+                            @if (obj.ApplicationType == Logic.Application.ApplicationType.UpgradeAccount)
+                            {
+                                <td width="20%">Улучшение аккаунта</td>
+                            }
+                            else
+                            {
+                                <td width="20%">Добавление объекта</td>
+                            }
+                            <td width="20%">Обработана</td>
                             <td></td>
                         </tr>
                     }
                     else if (obj.ApplicationStatus == Logic.Application.ApplicationStatus.Canceled)
                     {
                         <tr>
-                            <td width="25%">@obj.User.Surname</td>
-                            <td width="25%">@obj.User.Name</td>
+                            <td width="20%">@obj.User.Surname</td>
+                            <td width="20%">@obj.User.Name</td>
+                            @if (obj.ApplicationType == Logic.Application.ApplicationType.UpgradeAccount)
+                            {
+                                <td width="20%">Улучшение аккаунта</td>
+                            }
+                            else
+                            {
+                                <td width="20%">Добавление объекта</td>
+                            }
                             <td>Отклонена администратором</td>
                             <td></td>
                         </tr>

@@ -4,9 +4,8 @@ using VladimirTripAdvisor.Logic.Application;
 
 namespace VladimirTripAdvisor.ViewModels
 {
-    public class ApplicationObjectViewModel
+    public class ApplicationObjectViewModelWithoutRequiredImage
     {
-
         public string UserID { get; set; }
 
         public long? ApplicationId { get; set; }
@@ -34,7 +33,6 @@ namespace VladimirTripAdvisor.ViewModels
         [Required(ErrorMessage = "Данное поле обязательно")]
         public PlaceType PlaceType { get; set; }
 
-        [Required(ErrorMessage = "Данное поле обязательно")]
         [JsonIgnore]
         public IList<IFormFile> Images { get; set; }
 
