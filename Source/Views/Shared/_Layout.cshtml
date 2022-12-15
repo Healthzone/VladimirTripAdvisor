@@ -24,7 +24,7 @@
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">На главную</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Object" asp-action="Index">Объекты</a>
+                            <a class="nav-link" asp-area="" asp-controller="Object" asp-action="AllObjects">Каталог объектов</a>
                         </li>
                         @if (User.IsInRole(WC.AdminRole))
                         {
@@ -50,6 +50,10 @@
                         }
                         @if (User.IsInRole(WC.OwnerRole))
                         {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Object" asp-action="ViewMyObjects">Мои объекты</a>
+                            </li>
+
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="Application" asp-action="CreateApplicationObject">Добавить объект</a>
                             </li>

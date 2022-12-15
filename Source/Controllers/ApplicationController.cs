@@ -345,6 +345,8 @@ namespace VladimirTripAdvisor.Controllers
         [Authorize(Roles = WC.AdminRole)]
         public IActionResult SubmitApplicationObject(long? id)
         {
+            if (ModelState.IsValid)
+            {
             if (id == null || id == 0)
             {
                 return NotFound();
@@ -361,24 +363,39 @@ namespace VladimirTripAdvisor.Controllers
                 (application.ApplicationData, ApplicationType.AddObject);
             application.ApplicationStatus = ApplicationStatus.Done;
 
+            if(applicationJsonData == null)
+            {
+                return BadRequest();
+            }
+
             ObjectOfVisitModel place = new ObjectOfVisitModel()
             {
                 IdOwner = application.UserId,
                 Name = applicationJsonData.Name,
-                PlaceDescription = applicationJsonData.Description,
+                Description = applicationJsonData.Description,
                 StreetAddress = applicationJsonData.Address,
                 Latitude = applicationJsonData.Latitude,
                 Longitude = applicationJsonData.Longitude,
                 AdditionalAddressInfo = applicationJsonData.AdditionalInfoAddress,
                 PlaceURL = applicationJsonData.ObjectURL,
-                PlaceType = applicationJsonData.PlaceType
+                PlaceType = applicationJsonData.PlaceType,
+                ShortDescription = applicationJsonData.ShortDescription
 
             };
             _db.Application.Update(application);
             _db.ObjectOfVisit.Add(place);
             _db.SaveChanges();
 
+            var objectImages = _db.Image.Where(x=>x.ApplicationId == application.Id); 
+            foreach (var item in objectImages)
+            {
+                item.ObjectId = place.Id;
+            }
+            _db.UpdateRange(objectImages);
+            _db.SaveChanges();
             return RedirectToAction("CheckApplication");
+            }
+            return View("SubmitApplicationObject");
         }
 
         [Authorize(Roles = WC.UserRole)]
