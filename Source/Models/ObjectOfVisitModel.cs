@@ -13,7 +13,12 @@
         [Required(ErrorMessage = "Это поле обязательно")]
         [StringLength(maximumLength: 1000)]
         [Column("place_description")]
-        public string PlaceDescription { get; set; }
+        public string Description { get; set; }
+
+        [Required(ErrorMessage = "Это поле обязательно")]
+        [StringLength(maximumLength: 250)]
+        [Column("place_short_description")]
+        public string ShortDescription { get; set; }
 
         [Column("place_type")]
         public PlaceType PlaceType { get; set; }
