@@ -20,12 +20,14 @@
             @foreach (var obj in Model)
             {
                 <div class="col" >
-                    <div class="card" style="width: 36rem; height:650px">
-                        <img src="data:image/jpg;base64, @obj.ImageBase64" class="card-img-top rounded mx-auto d-block" style="height:400px" alt="...">
+                    <div class="card border-success" style="width: 36rem; height:650px">
+                        <img src="data:image/jpg;base64, @obj.ImageMainBase64" class="card-img-top rounded mx-auto d-block" style="height:400px" alt="...">
                         <div class="card-body">
                             <h5 class="card-title text-center">@obj.Place.Name</h5>
                             <p class="card-text" style="text-align:justify">@obj.Place.ShortDescription</p>
-                            <a href="#" class="btn btn-primary position-absolute bottom-0 start-0 mb-4 ms-4">Go somewhere</a>
+                            <a asp-controller="Object" asp-route-Id="@obj.Place.Id" asp-action="ViewObject" class="btn btn-primary">
+                                Открыть
+                            </a>
                         </div>
                     </div>
                 </div>

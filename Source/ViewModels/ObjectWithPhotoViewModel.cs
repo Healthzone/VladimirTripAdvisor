@@ -5,9 +5,11 @@
         public ObjectWithPhotoViewModel()
         {
             Place = new ObjectOfVisitModel();
+            Images = new List<string>();
         }
         public ObjectOfVisitModel Place{ get; set; }
-        public string? ImageBase64{ get; set; }
+        public string? ImageMainBase64{ get; set; }
+        public IList<string>? Images { get; set; }
 
 
     }

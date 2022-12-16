@@ -30,7 +30,7 @@ namespace VladimirTripAdvisor.Controllers
                 return View();
             }
         }
-        public IActionResult AllObjects()
+        public async Task<IActionResult> AllObjects()
         {
 
             IList<ObjectOfVisitModel> objectList = _db.ObjectOfVisit.ToList();
@@ -38,12 +38,37 @@ namespace VladimirTripAdvisor.Controllers
 
             foreach (var item in objectList)
             {
+                ImageModel imgByte = await _db.Image.FirstOrDefaultAsync(x => x.ObjectId == item.Id);
                 var obj = new ObjectWithPhotoViewModel()
                 {
                     Place = item,
-                    ImageBase64 = Convert.ToBase64String(_db.Image.FirstOrDefault(x => x.ObjectId == item.Id).ImageByte)
+                    ImageMainBase64 = Convert.ToBase64String(imgByte.ImageByte)
                 };
                 objectVM.Add(obj);
+            }
+            return View(objectVM);
+        }
+
+        public IActionResult ViewObject(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var place = _db.ObjectOfVisit.Find(id);
+            if (place == null)
+            {
+                return NotFound();
+            }
+            var objectVM = new ObjectWithPhotoViewModel()
+            {
+                Place = place
+            };
+            var objectImages = _db.Image.Where(x => x.ObjectId == id);
+            foreach (var item in objectImages)
+            {
+                objectVM.Images.Add(Convert.ToBase64String(item.ImageByte));
             }
             return View(objectVM);
         }
