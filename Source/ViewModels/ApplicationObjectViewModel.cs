@@ -14,12 +14,15 @@ namespace VladimirTripAdvisor.ViewModels
         public ApplicationStatus? ApplicationStatus { get; set; }
 
         [Required(ErrorMessage = "Данное поле обязательно")]
+        [StringLength(maximumLength: 50)]
         public string? Name { get; set; }
 
+        [StringLength(maximumLength: 1500)]
         [Required(ErrorMessage = "Данное поле обязательно")]
         public string? Description { get; set; }
 
         [Required(ErrorMessage = "Данное поле обязательно")]
+        [StringLength(maximumLength: 250)]
         public string? ShortDescription { get; set; }
 
         [Required(ErrorMessage = "Данное поле обязательно")]
@@ -33,6 +36,9 @@ namespace VladimirTripAdvisor.ViewModels
 
         [Required(ErrorMessage = "Данное поле обязательно")]
         public PlaceType PlaceType { get; set; }
+
+        [Required(ErrorMessage = "Данное поле обязательно")]
+        public string? PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "Данное поле обязательно")]
         [JsonIgnore]
