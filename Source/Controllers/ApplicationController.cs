@@ -34,7 +34,13 @@ namespace VladimirTripAdvisor.Controllers
 
         public IActionResult CreateApplicationObject()
         {
-            return View();
+            if (!User.IsInRole(WC.OwnerRole))
+            {
+                return Forbid();
+            }
+            ApplicationObjectViewModel application = new ApplicationObjectViewModel();
+            application.UserID = _db.User.Where(x => x.Id == User.FindFirstValue(ClaimTypes.NameIdentifier)).FirstOrDefault().Id;
+            return View(application);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -43,6 +49,10 @@ namespace VladimirTripAdvisor.Controllers
             if (!User.IsInRole(WC.OwnerRole))
             {
                 return Forbid();
+            }
+            if (!ModelState.IsValid)
+            {
+                return View();
             }
 
             UserModel? user = _db.User.Where(x => x.Id == User.FindFirstValue(ClaimTypes.NameIdentifier)).FirstOrDefault();
@@ -102,6 +112,11 @@ namespace VladimirTripAdvisor.Controllers
             if (!User.IsInRole(WC.OwnerRole))
             {
                 return Forbid();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View("ViewApplicationObject");
             }
 
             UserModel? user = _db.User.Where(x => x.Id == User.FindFirstValue(ClaimTypes.NameIdentifier)).FirstOrDefault();
@@ -345,8 +360,10 @@ namespace VladimirTripAdvisor.Controllers
         [Authorize(Roles = WC.AdminRole)]
         public IActionResult SubmitApplicationObject(long? id)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
+                return View("ViewApplicationObject");
+            }
             if (id == null || id == 0)
             {
                 return NotFound();
@@ -379,7 +396,8 @@ namespace VladimirTripAdvisor.Controllers
                 AdditionalAddressInfo = applicationJsonData.AdditionalInfoAddress,
                 PlaceURL = applicationJsonData.ObjectURL,
                 PlaceType = applicationJsonData.PlaceType,
-                ShortDescription = applicationJsonData.ShortDescription
+                ShortDescription = applicationJsonData.ShortDescription,
+                PhoneNumber= applicationJsonData.PhoneNumber
 
             };
             _db.Application.Update(application);
@@ -394,8 +412,7 @@ namespace VladimirTripAdvisor.Controllers
             _db.UpdateRange(objectImages);
             _db.SaveChanges();
             return RedirectToAction("CheckApplication");
-            }
-            return View("SubmitApplicationObject");
+            
         }
 
         [Authorize(Roles = WC.UserRole)]
