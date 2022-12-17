@@ -1,4 +1,6 @@
-﻿namespace VladimirTripAdvisor.Models
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
+namespace VladimirTripAdvisor.Models
 {
     [Table("object_of_visit")]
     public class ObjectOfVisitModel
@@ -7,11 +9,11 @@
         public long Id { get; set; }
 
         [Required(ErrorMessage = "Это поле обязательно")]
-        [StringLength(maximumLength:150)]
+        [StringLength(maximumLength:50)]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Это поле обязательно")]
-        [StringLength(maximumLength: 1000)]
+        [StringLength(maximumLength: 1500)]
         [Column("place_description")]
         public string Description { get; set; }
 
@@ -36,6 +38,13 @@
         [StringLength(maximumLength: 150)]
         [Column("additional_address_info")]
         public string? AdditionalAddressInfo { get; set; }
+
+        [Column("average_rating")]
+        public float? AverageRating { get; set; }
+
+        [Phone]
+        [Column("phone_number")]
+        public string? PhoneNumber { get; set; }
 
         [StringLength(maximumLength: 150)]
         [Column("place_url")]

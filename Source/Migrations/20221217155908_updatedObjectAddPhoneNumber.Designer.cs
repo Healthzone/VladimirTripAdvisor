@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VladimirTripAdvisor.Data;
 
@@ -10,9 +11,10 @@ using VladimirTripAdvisor.Data;
 namespace VladimirTripAdvisor.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221217155908_updatedObjectAddPhoneNumber")]
+    partial class updatedObjectAddPhoneNumber
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -351,8 +353,8 @@ namespace VladimirTripAdvisor.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("varchar(150)");
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("longtext")
@@ -396,21 +398,11 @@ namespace VladimirTripAdvisor.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("id_object");
 
-                    b.Property<DateOnly>("ReviewDate")
-                        .HasColumnType("date")
-                        .HasColumnName("review_date");
-
                     b.Property<string>("ReviewDescription")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("varchar(1000)")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)")
                         .HasColumnName("review_description");
-
-                    b.Property<string>("ReviewName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("review_name");
 
                     b.Property<int>("Score")
                         .HasColumnType("int")
