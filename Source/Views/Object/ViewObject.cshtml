@@ -35,11 +35,14 @@
             <div class="col-auto col-lg-auto d-flex d-xxl-flex align-items-center justify-content-xxl-center" style="width: auto;">
                 <p class="fw-semibold text-success d-flex align-items-center" style="padding-bottom: 0px;margin-bottom: 0px;width: 100%;height: 100%;">Открыто</p>
             </div>
-            <div class="col-auto col-lg-auto d-flex d-xxl-flex align-items-center justify-content-xxl-center" style="width: auto;">
-                <button class="btn btn-warning d-flex justify-content-center align-items-center" type="button" style="height: 40px;" data-bs-target="#addReviewModal" data-bs-toggle="modal">
-                    <strong>Оставить отзыв</strong>
-                </button>
-            </div>
+            @if (User.IsInRole(WC.UserRole) || User.IsInRole(WC.OwnerRole) || User.IsInRole(WC.AdminRole))
+            {
+                <div class="col-auto col-lg-auto d-flex d-xxl-flex align-items-center justify-content-xxl-center" style="width: auto;">
+                    <button class="btn btn-warning d-flex justify-content-center align-items-center" type="button" style="height: 40px;" data-bs-target="#addReviewModal" data-bs-toggle="modal">
+                        <strong>Оставить отзыв</strong>
+                    </button>
+                </div>
+            }
         </div>
         <div class="row d-flex flex-column align-content-center flex-sm-column flex-md-column flex-lg-row flex-xl-row flex-xxl-row" style="padding-left: 0px;padding-top: 20px;height: auto;width: 100%;">
             <div class="col-4 col-sm-12 col-lg-4 align-self-start" style="padding-left: 0px;height: auto;">
@@ -71,8 +74,10 @@
             </div>
         </div>
         <div class="row d-flex flex-row flex-wrap flex-sm-column flex-xl-row" style="padding-top: 50px;width: 100%;height: auto;">
-            @await Component.InvokeAsync("CommentarySummary")
-            @await Component.InvokeAsync("Commentary")
+            @await Component.InvokeAsync("CommentarySummary", new {id = Model.Place.Id})
+            <div class="col-6 offset-xl-2 offset-xxl-2 d-flex flex-column align-self-sm-center align-self-xl-start" style="height: auto;border-color: var(--bs-blue);padding-top: 4px;">
+                @await Component.InvokeAsync("Commentary", new {id = Model.Place.Id})
+            </div>
         </div>
         <div id="addReviewModal" class="modal fade" role="dialog" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -84,7 +89,7 @@
                         <div class="modal-body">
 
                             <input asp-for="reviewModel.UserId" class="form-control form-control-sm" hidden type="text" value="@UserManager.GetUserId(User)" />
-                            <input asp-for="reviewModel.ObjectId" class="form-control form-control-sm" hidden type="text" value="@Model.Place.Id"/>
+                            <input asp-for="reviewModel.ObjectId" class="form-control form-control-sm" hidden type="text" value="@Model.Place.Id" />
                             <div style="margin-bottom: 10px;">
                                 <label class="form-label" style="font-weight: bold;">Название:</label>
                                 <input asp-for="reviewModel.ReviewName" class="form-control form-control-sm" type="text" />
@@ -98,11 +103,11 @@
                             <label class="form-label" style="font-weight: bold;">Ваша оценка:</label>
                             <select asp-for="reviewModel.Score" class="form-control" asp-items="Html.GetEnumSelectList<ReviewScore>()"></select>
                             @*<select class="form-select" required>
-                                <option value="5" selected>Отлично</option>
-                                <option value="4">Нормально</option>
-                                <option value="3">Средне</option>
-                                <option value="2">Плохо</option>
-                                <option value="1">Ужасно</option>
+                            <option value="5" selected>Отлично</option>
+                            <option value="4">Нормально</option>
+                            <option value="3">Средне</option>
+                            <option value="2">Плохо</option>
+                            <option value="1">Ужасно</option>
                             </select>*@
                         </div>
                         <div class="modal-footer">

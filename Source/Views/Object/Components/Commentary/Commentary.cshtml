@@ -1,107 +1,60 @@
-﻿<div class="col-6 offset-xl-2 offset-xxl-2 d-flex flex-column align-self-sm-center align-self-xl-start" style="height: auto;border-color: var(--bs-blue);padding-top: 4px;">
-    <div style="height: auto;border-top: 1px solid rgba(55,57,59,0.48);border-bottom: 1px solid rgba(55,57,59,0.48);margin-bottom: 20px;">
+﻿@model IEnumerable<VladimirTripAdvisor.ViewModels.ReviewViewModel>
+
+@foreach (var review in Model)
+{
+    <div style="height: auto;border-top: 1px solid rgba(55,57,59,0.48);margin-bottom: 20px;">
         <div class="d-flex justify-content-between" style="width: 100%;height: 35px;border-color: var(--bs-purple);margin-top: 15px;">
             <div class="d-flex flex-row" style="height: 32px;width: auto;">
                 <span style="width: 32px;height: 32px;"><img style="width: 100%;height: 100%;" /></span>
-                <p style="height: 100%;padding-left: 7px;padding-right: 7px;margin-bottom: 0px;">Валентин</p>
+                <p class="d-flex justify-content-center align-items-center align-content-center" style="height: 100%;padding-left: 7px;padding-right: 7px;margin-bottom: 0px;">@review.Name @review.Surname.Substring(0,1)</p>
             </div>
             <div class="d-flex justify-content-center align-items-center" style="width: 69px;">
                 <p style="margin-bottom: 0px;font-size: 30px;height: 100%;font-weight: bold;">⋮<br /></p>
             </div>
         </div>
-        <div style="margin-top: 16px;"><span><img src="~/images/star.png" style="width: 26px;height: 26px;" /><img src="~/images/star.png" style="width: 26px;height: 26px;" /><img src="~/images/star.png" style="width: 26px;height: 26px;" /><img src="~/images/star.png" style="width: 26px;height: 26px;" /><img src="~/images/star.png" style="width: 26px;height: 26px;" /></span></div>
+        <div style="margin-top: 16px;">
+            <span>
+                @if (review.Review.Score == ReviewScore.Excellent)
+                {
+                    <img src="~/images/star.png" style="width: 26px;height: 26px;" />
+                    <img src="~/images/star.png" style="width: 26px;height: 26px;" />
+                    <img src="~/images/star.png" style="width: 26px;height: 26px;" />
+                    <img src="~/images/star.png" style="width: 26px;height: 26px;" />
+                    <img src="~/images/star.png" style="width: 26px;height: 26px;" />
+                }
+                else if (review.Review.Score == ReviewScore.Good)
+                {
+                    <img src="~/images/star.png" style="width: 26px;height: 26px;" />
+                    <img src="~/images/star.png" style="width: 26px;height: 26px;" />
+                    <img src="~/images/star.png" style="width: 26px;height: 26px;" />
+                    <img src="~/images/star.png" style="width: 26px;height: 26px;" />
+                }
+                else if (review.Review.Score == ReviewScore.Average)
+                {
+                    <img src="~/images/star.png" style="width: 26px;height: 26px;" />
+                    <img src="~/images/star.png" style="width: 26px;height: 26px;" />
+                    <img src="~/images/star.png" style="width: 26px;height: 26px;" />
+                }
+                else if (review.Review.Score == ReviewScore.Poor)
+                {
+                    <img src="~/images/star.png" style="width: 26px;height: 26px;" />
+                    <img src="~/images/star.png" style="width: 26px;height: 26px;" />
+                }
+                else
+                {
+                    <img src="~/images/star.png" style="width: 26px;height: 26px;" />
+                }
+
+            </span>
+        </div>
         <div style="margin-top: 8px;margin-bottom: 4px;">
-            <p class="fw-bold" style="font-size: 20px;text-align: justify;margin-bottom: 0px;">Название отзыва</p>
+            <p class="fw-bold" style="font-size: 20px;text-align: justify;margin-bottom: 0px;">@review.Review.ReviewName</p>
         </div>
         <div>
-            <p style="font-style: italic;">Дата отзыва</p>
+            <p style="font-style: italic;">@review.Review.ReviewDate.ToLongDateString()</p>
         </div>
         <div>
-            <p style="margin-bottom: 4px;">In the middle of the XII century, when the Vladimir-Suzdal Principality was ruled by the son of Yuri Dolgoruky Andrey Bogolyubsky, the Golden gate served as the main entrance, was a defensive structure and a triumphal arch. Covered with sheets of gilded copper, shining brightly in the sun, the gates amazed the imagination of contemporaries. In those days the city was surrounded by an extended shaft with five travel gates. The Golden gate is the only one that has survived to the present day pres In the middle of the XII century, when the Vladimir-Suzdal Principality was ruled by the son of Yuri Dolgoruky Andrey Bogolyubsky, the Golden gate served as the main entrance, was a defensive structure and a triumphal arch. Covered with sheets of gilded copper, shining brightly in the sun, the gates amazed the imagination of contemporaries. In those days the city was surrounded by an extended shaft with five travel gates. The Golden gate is the only one that has survived to the present day prese</p>
+            <p style="margin-bottom: 4px;">@review.Review.ReviewDescription</p>
         </div>
     </div>
-    <div style="height: auto;margin-bottom: 20px;border-bottom: 1px solid rgba(55,57,59,0.48);">
-        <div class="d-flex justify-content-between" style="width: 100%;height: 35px;border-color: var(--bs-purple);margin-top: 4px;">
-            <div class="d-flex flex-row" style="height: 32px;width: auto;">
-                <span style="width: 32px;height: 32px;"><img style="width: 100%;height: 100%;" /></span>
-                <p style="height: 100%;padding-left: 7px;padding-right: 7px;margin-bottom: 0px;">Валентин</p>
-            </div>
-            <div class="d-flex justify-content-center align-items-center" style="width: 69px;">
-                <p style="margin-bottom: 0px;font-size: 30px;height: 100%;font-weight: bold;">⋮<br /></p>
-            </div>
-        </div>
-        <div style="margin-top: 16px;"><span><img src="~/images/star.png" style="width: 26px;height: 26px;" /><img src="~/images/star.png" style="width: 26px;height: 26px;" /><img src="~/images/star.png" style="width: 26px;height: 26px;" /><img src="~/images/star.png" style="width: 26px;height: 26px;" /></span></div>
-        <div style="margin-top: 8px;margin-bottom: 4px;">
-            <p class="fw-bold" style="font-size: 20px;text-align: justify;margin-bottom: 0px;">Название отзыва</p>
-        </div>
-        <div>
-            <p style="font-style: italic;">Дата отзыва</p>
-        </div>
-        <div>
-            <p style="margin-bottom: 4px;">In the middle of the XII century, when the Vladimir-Suzdal Principality was ruled by the son of Yuri Dolgoruky Andrey Bogolyubsky, the Golden gate served as the main entrance, was a defensive structure and a triumphal arch. Covered with sheets of gilded copper, shining brightly in the sun, the gates amazed the imagination of contemporaries. In those days the city was surrounded by an extended shaft with five travel gates. The Golden gate is the only one that has survived to the present day pres In the middle of the XII century, when the Vladimir-Suzdal Principality was ruled by the son of Yuri Dolgoruky Andrey Bogolyubsky, the Golden gate served as the main entrance, was a defensive structure and a triumphal arch. Covered with sheets of gilded copper, shining brightly in the sun, the gates amazed the imagination of contemporaries. In those days the city was surrounded by an extended shaft with five travel gates. The Golden gate is the only one that has survived to the present day prese</p>
-        </div>
-    </div>
-    <div style="height: auto;margin-bottom: 20px;border-bottom: 1px solid rgba(55,57,59,0.48);">
-        <div class="d-flex justify-content-between" style="width: 100%;height: 35px;border-color: var(--bs-purple);margin-top: 4px;">
-            <div class="d-flex flex-row" style="height: 32px;width: auto;">
-                <span style="width: 32px;height: 32px;"><img style="width: 100%;height: 100%;" /></span>
-                <p style="height: 100%;padding-left: 7px;padding-right: 7px;margin-bottom: 0px;">Валентин</p>
-            </div>
-            <div class="d-flex justify-content-center align-items-center" style="width: 69px;">
-                <p style="margin-bottom: 0px;font-size: 30px;height: 100%;font-weight: bold;">⋮<br /></p>
-            </div>
-        </div>
-        <div style="margin-top: 16px;"><span><img src="~/images/star.png" style="width: 26px;height: 26px;" /><img src="~/images/star.png" style="width: 26px;height: 26px;" /><img src="~/images/star.png" style="width: 26px;height: 26px;" /></span></div>
-        <div style="margin-top: 8px;margin-bottom: 4px;">
-            <p class="fw-bold" style="font-size: 20px;text-align: justify;margin-bottom: 0px;">Название отзыва</p>
-        </div>
-        <div>
-            <p style="font-style: italic;">Дата отзыва</p>
-        </div>
-        <div>
-            <p style="margin-bottom: 4px;">In the middle of the XII century, when the Vladimir-Suzdal Principality was ruled by the son of Yuri Dolgoruky Andrey Bogolyubsky, the Golden gate served as the main entrance, was a defensive structure and a triumphal arch. Covered with sheets of gilded copper, shining brightly in the sun, the gates amazed the imagination of contemporaries. In those days the city was surrounded by an extended shaft with five travel gates. The Golden gate is the only one that has survived to the present day pres In the middle of the XII century, when the Vladimir-Suzdal Principality was ruled by the son of Yuri Dolgoruky Andrey Bogolyubsky, the Golden gate served as the main entrance, was a defensive structure and a triumphal arch. Covered with sheets of gilded copper, shining brightly in the sun, the gates amazed the imagination of contemporaries. In those days the city was surrounded by an extended shaft with five travel gates. The Golden gate is the only one that has survived to the present day prese</p>
-        </div>
-    </div>
-    <div style="height: auto;margin-bottom: 20px;border-bottom: 1px solid rgba(55,57,59,0.48);">
-        <div class="d-flex justify-content-between" style="width: 100%;height: 35px;border-color: var(--bs-purple);margin-top: 4px;">
-            <div class="d-flex flex-row" style="height: 32px;width: auto;">
-                <span style="width: 32px;height: 32px;"><img style="width: 100%;height: 100%;" /></span>
-                <p style="height: 100%;padding-left: 7px;padding-right: 7px;margin-bottom: 0px;">Валентин</p>
-            </div>
-            <div class="d-flex justify-content-center align-items-center" style="width: 69px;">
-                <p style="margin-bottom: 0px;font-size: 30px;height: 100%;font-weight: bold;">⋮<br /></p>
-            </div>
-        </div>
-        <div style="margin-top: 16px;"><span><img src="~/images/star.png" style="width: 26px;height: 26px;" /><img src="~/images/star.png" style="width: 26px;height: 26px;" /></span></div>
-        <div style="margin-top: 8px;margin-bottom: 4px;">
-            <p class="fw-bold" style="font-size: 20px;text-align: justify;margin-bottom: 0px;">Название отзыва</p>
-        </div>
-        <div>
-            <p style="font-style: italic;">Дата отзыва</p>
-        </div>
-        <div>
-            <p style="margin-bottom: 4px;">In the middle of the XII century, when the Vladimir-Suzdal Principality was ruled by the son of Yuri Dolgoruky Andrey Bogolyubsky, the Golden gate served as the main entrance, was a defensive structure and a triumphal arch. Covered with sheets of gilded copper, shining brightly in the sun, the gates amazed the imagination of contemporaries. In those days the city was surrounded by an extended shaft with five travel gates. The Golden gate is the only one that has survived to the present day pres In the middle of the XII century, when the Vladimir-Suzdal Principality was ruled by the son of Yuri Dolgoruky Andrey Bogolyubsky, the Golden gate served as the main entrance, was a defensive structure and a triumphal arch. Covered with sheets of gilded copper, shining brightly in the sun, the gates amazed the imagination of contemporaries. In those days the city was surrounded by an extended shaft with five travel gates. The Golden gate is the only one that has survived to the present day prese</p>
-        </div>
-    </div>
-    <div style="height: auto;margin-bottom: 20px;border-bottom: 1px solid rgba(55,57,59,0.48);">
-        <div class="d-flex justify-content-between" style="width: 100%;height: 35px;border-color: var(--bs-purple);margin-top: 4px;">
-            <div class="d-flex flex-row" style="height: 32px;width: auto;">
-                <span style="width: 32px;height: 32px;"><img style="width: 100%;height: 100%;" /></span>
-                <p style="height: 100%;padding-left: 7px;padding-right: 7px;margin-bottom: 0px;">Валентин</p>
-            </div>
-            <div class="d-flex justify-content-center align-items-center" style="width: 69px;">
-                <p style="margin-bottom: 0px;font-size: 30px;height: 100%;font-weight: bold;">⋮<br /></p>
-            </div>
-        </div>
-        <div style="margin-top: 16px;"><span><img src="~/images/star.png" style="width: 26px;height: 26px;" /></span></div>
-        <div style="margin-top: 8px;margin-bottom: 4px;">
-            <p class="fw-bold" style="font-size: 20px;text-align: justify;margin-bottom: 0px;">Название отзыва</p>
-        </div>
-        <div>
-            <p style="font-style: italic;">Дата отзыва</p>
-        </div>
-        <div>
-            <p style="margin-bottom: 4px;">In the middle of the XII century, when the Vladimir-Suzdal Principality was ruled by the son of Yuri Dolgoruky Andrey Bogolyubsky, the Golden gate served as the main entrance, was a defensive structure and a triumphal arch. Covered with sheets of gilded copper, shining brightly in the sun, the gates amazed the imagination of contemporaries. In those days the city was surrounded by an extended shaft with five travel gates. The Golden gate is the only one that has survived to the present day pres In the middle of the XII century, when the Vladimir-Suzdal Principality was ruled by the son of Yuri Dolgoruky Andrey Bogolyubsky, the Golden gate served as the main entrance, was a defensive structure and a triumphal arch. Covered with sheets of gilded copper, shining brightly in the sun, the gates amazed the imagination of contemporaries. In those days the city was surrounded by an extended shaft with five travel gates. The Golden gate is the only one that has survived to the present day prese</p>
-        </div>
-    </div>
-</div>
+}
