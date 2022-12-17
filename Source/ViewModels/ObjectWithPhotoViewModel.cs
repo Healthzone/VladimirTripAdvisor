@@ -11,6 +11,8 @@
         public string? ImageMainBase64{ get; set; }
         public IList<string>? Images { get; set; }
 
+        public ReviewModel reviewModel { get; set; }
+
 
     }
 }
