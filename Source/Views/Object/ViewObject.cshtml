@@ -1,75 +1,122 @@
-﻿@model VladimirTripAdvisor.ViewModels.ObjectWithPhotoViewModel
+﻿@using Microsoft.AspNetCore.Identity;
+@inject UserManager<IdentityUser> UserManager
+@model VladimirTripAdvisor.ViewModels.ObjectWithPhotoViewModel
 @{
     ViewData["Title"] = "ViewObject";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    .truncate {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        text-overflow: ellipsis;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+</style>
 <body>
-    <div class="row" style="padding-bottom: 0px;max-height: 500px;">
-        <div class="col-xl-4 offset-xl-1" style="max-height: 500px;">
-            <div class="card pe-lg-0 me-lg-0">
-                <div class="card-body">
-                    <h4 class="card-title">Title</h4>
-                    <h6 class="text-muted card-subtitle mb-2">Subtitle</h6>
-                    <p class="card-text"><span style="color: rgb(32, 33, 34); background-color: rgb(248, 249, 250);">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </span><br /><span style="color: rgb(32, 33, 34); background-color: rgb(248, 249, 250);">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span><br /><span style="color: rgb(32, 33, 34); background-color: rgb(248, 249, 250);">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span><br /><br /></p><a class="card-link" href="#">Link</a><a class="card-link" href="#">Link</a>
+    <div class="container flex-column" style="display: flex;padding: 40px;position: relative;overflow: visible;max-width: 100%;height: auto;width: 1216px;">
+        <p class="d-flex" style="font-weight: bold;font-size: 51px;">@Model.Place.Name</p>
+        <div class="row text-start d-flex flex-column flex-lg-row flex-xl-row flex-xxl-row" style="position: relative;display: flex;overflow: visible;padding-left: 0px;padding-right: 0px;height: auto;width: auto;margin-right: 12px;">
+            <div class="col-auto d-flex flex-row" style="width: auto;">
+                <span><img class="d-xxl-flex align-items-xxl-center" src="~/images/star.png" width="40" height="40" /></span>
+                <p class="fw-semibold d-flex align-items-center" style="margin-bottom: 0px;padding-bottom: 0px;padding-left: 10px;font-size: 22px;width: auto;padding-top: 3px;">@Model.Place.AverageRating</p>
+            </div>
+            <div class="col-auto col-lg-auto d-xxl-flex justify-content-xxl-center align-items-xxl-center" style="height: auto;width: auto;">
+                <p class="fw-semibold d-flex flex-grow-0 align-items-center" style="margin-bottom: 0px;width: 100%;height: 100%;">@Model.Place.StreetAddress</p>
+            </div>
+            <div class="col-auto col-lg-auto d-flex d-md-flex d-xxl-flex align-items-center justify-content-xxl-center" style="height: auto;width: auto;">
+                <p class="fw-semibold d-flex align-items-center" style="margin-bottom: 0px;width: auto;">@Model.Place.PhoneNumber</p>
+            </div>
+            <div class="col-auto col-lg-auto d-flex d-xxl-flex align-items-center justify-content-xxl-center" style="width: auto;">
+                <p class="fw-semibold d-flex align-items-center" style="padding-bottom: 0px;margin-bottom: 0px;width: 100%;height: 100%;"><a href="@Model.Place.PlaceURL">Веб-сайт</a></p>
+            </div>
+            <div class="col-auto col-lg-auto d-flex d-xxl-flex align-items-center justify-content-xxl-center" style="width: auto;">
+                <p class="fw-semibold text-success d-flex align-items-center" style="padding-bottom: 0px;margin-bottom: 0px;width: 100%;height: 100%;">Открыто</p>
+            </div>
+            <div class="col-auto col-lg-auto d-flex d-xxl-flex align-items-center justify-content-xxl-center" style="width: auto;">
+                <button class="btn btn-warning d-flex justify-content-center align-items-center" type="button" style="height: 40px;" data-bs-target="#addReviewModal" data-bs-toggle="modal">
+                    <strong>Оставить отзыв</strong>
+                </button>
+            </div>
+        </div>
+        <div class="row d-flex flex-column align-content-center flex-sm-column flex-md-column flex-lg-row flex-xl-row flex-xxl-row" style="padding-left: 0px;padding-top: 20px;height: auto;width: 100%;">
+            <div class="col-4 col-sm-12 col-lg-4 align-self-start" style="padding-left: 0px;height: auto;">
+                <div class="card" style="padding-right: 0px;margin-right: 0px;width: 100%;">
+                    <div class="card-body">
+                        <h4 class="card-title">Об объекте</h4>
+                        <p class="flex-wrap card-text truncate">@Model.Place.Description</p><button id="toggle" class="btn btn-secondary toggle" type="button">Подробнее</button><button id="toggle" class="btn btn-secondary text-center d-none justify-content-xxl-center toggle" type="button" style="width: 120px;text-align: center;">Скрыть</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col order-first order-lg-last order-xl-last order-xxl-last col-md" style="height: auto;">
+                <div id="carousel-1" class="carousel slide" data-bs-ride="false" style="width: 100%;">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active"><img class="w-100 d-block" src="data:image/jpg;base64, @Model.Images.First()" alt="Slide Image" style="height: 450px; width:750px" /></div>
+                        @for (int i = 1; i < Model.Images.Count; i++)
+                        {
+                            <div class="carousel-item" data-bs-interval="">
+                                <img class="w-100 d-block" src="data:image/jpg;base64, @Model.Images[i]" alt="Slide Image" style="height: 450px; width:750px" />
+                            </div>
+                        }
+                    </div>
+                    <div><a class="carousel-control-prev" href="#carousel-1" role="button" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span><span class="visually-hidden">Previous</span></a><a class="carousel-control-next" href="#carousel-1" role="button" data-bs-slide="next"><span class="carousel-control-next-icon"></span><span class="visually-hidden">Next</span></a></div>
+                </div>
+                <div class="row g-0" style="padding-top: 30px;height: auto;width: 100%;padding-bottom: 30px;">
+                    <div class="col d-flex" style="padding-top: 0px;width: 100%;height: 100%;">
+                        <div class="d-flex justify-content-center align-items-center" style="height: 100%;width: 100%;"><img src="screen0.png" style="height: 400px;width: 100%;" /></div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-xl-5 offset-xl-1" style="min-height: 500px;">
-            <div id="carouselIndicators" class="carousel slide" data-bs-target="#carouselIndicators" data-bs-ride="false" style="min-height: 500px;border-radius: 2px; min-width:750px">
-                <div class="carousel-inner">
-                    <div class="carousel-item active"><img class="w-100 d-block" src="data:image/jpg;base64, @Model.Images.First()" alt="Slide Image" style="height: 450px; width:750px" /></div>
-                    @for (int i = 1; i < Model.Images.Count; i++)
-                    {
-                        <div class="carousel-item" data-bs-interval="">
-                            <img class="w-100 d-block" src="data:image/jpg;base64, @Model.Images[i]" alt="Slide Image" style="height: 450px; width:750px" />
-                        </div>
-                    }
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselIndicators" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-            @*            <div id="carouselIndicators" class="carousel slide py-2" data-bs-ride="true">
-            <div class="carousel-inner">
-            <div class="carousel-item active" data-bs-interval="">
-            <img src="data:image/jpg;base64, @Model.Images.First()" style="height: 450px;" class="d-block w-100" alt="...">
-            </div>
-            @for (int i = 1; i < Model.Images.Count; i++)
-            {
-            <div class="carousel-item" data-bs-interval="">
-            <img src="data:image/jpg;base64, @Model.Images[i]" class="d-block w-100" style="height: 450px;" alt="...">
-            </div>
-            }
-            </div>*@
+        <div class="row d-flex flex-row flex-wrap flex-sm-column flex-xl-row" style="padding-top: 50px;width: 100%;height: auto;">
+            @await Component.InvokeAsync("CommentarySummary")
+            @await Component.InvokeAsync("Commentary")
+        </div>
+        <div id="addReviewModal" class="modal fade" role="dialog" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Отзыв</h4><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="post">
+                        <div class="modal-body">
 
+                            <input asp-for="reviewModel.UserId" class="form-control form-control-sm" hidden type="text" value="@UserManager.GetUserId(User)" />
+                            <input asp-for="reviewModel.ObjectId" class="form-control form-control-sm" hidden type="text" value="@Model.Place.Id"/>
+                            <div style="margin-bottom: 10px;">
+                                <label class="form-label" style="font-weight: bold;">Название:</label>
+                                <input asp-for="reviewModel.ReviewName" class="form-control form-control-sm" type="text" />
+                                <span asp-validation-for="reviewModel.ReviewName" class="text-danger"></span>
+                            </div>
+                            <div style="margin-bottom: 10px;">
+                                <label class="form-label" style="font-weight: bold;">Опишите Ваши впечатления о посещенном месте:</label>
+                                <textarea asp-for="reviewModel.ReviewDescription" class="form-control" rows="4"></textarea>
+                                <span asp-validation-for="reviewModel.ReviewDescription" class="text-danger"></span>
+                            </div>
+                            <label class="form-label" style="font-weight: bold;">Ваша оценка:</label>
+                            <select asp-for="reviewModel.Score" class="form-control" asp-items="Html.GetEnumSelectList<ReviewScore>()"></select>
+                            @*<select class="form-select" required>
+                                <option value="5" selected>Отлично</option>
+                                <option value="4">Нормально</option>
+                                <option value="3">Средне</option>
+                                <option value="2">Плохо</option>
+                                <option value="1">Ужасно</option>
+                            </select>*@
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-light" type="button" data-bs-dismiss="modal">Закрыть</button>
+                            <button asp-controller="Review" asp-action="AddReview" class="btn btn-primary" type="submit">Готово</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </body>
-@*<body>
-    <div class="row" style="padding-bottom: 0px;max-height: 500px;">
-        <div class="col-xl-4 offset-xl-1" style="max-height: 500px;">
-            <div class="card pe-lg-0 me-lg-0">
-                <div class="card-body">
-                    <h4 class="card-title">Title</h4>
-                    <h6 class="text-muted card-subtitle mb-2">Subtitle</h6>
-                    <p class="card-text"><span style="color: rgb(32, 33, 34); background-color: rgb(248, 249, 250);">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </span><br /><span style="color: rgb(32, 33, 34); background-color: rgb(248, 249, 250);">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span><br /><span style="color: rgb(32, 33, 34); background-color: rgb(248, 249, 250);">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span><br /><br /></p><a class="card-link" href="#">Link</a><a class="card-link" href="#">Link</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-5 offset-xl-1" style="min-height: 500px;">
-            <div id="carousel-1" class="carousel slide" data-bs-ride="false" style="min-height: 500px;border-radius: 2px;">
-                <div class="carousel-inner">
-                    <div class="carousel-item"><img class="w-100 d-block" src="1.jpeg" alt="Slide Image" style="height: 450px;" /></div>
-                    <div class="carousel-item"><img class="w-100 d-block" src="2.jpeg" alt="Slide Image" style="height: 450px;" /></div>
-                    <div class="carousel-item active"><img class="w-100 d-block" src="3.jpeg" alt="Slide Image" style="height: 450px;" /></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>*@
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/btn_readmore.js"></script>
