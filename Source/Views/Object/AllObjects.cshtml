@@ -19,15 +19,40 @@
 
             @foreach (var obj in Model)
             {
-                <div class="col" >
-                    <div class="card border-success" style="width: 36rem; height:650px">
-                        <img src="data:image/jpg;base64, @obj.ImageMainBase64" class="card-img-top rounded mx-auto d-block" style="height:400px" alt="...">
+                <div class="col" style="width: 500px;">
+                    <div class="card">
+                        <img class="img-fluid card-img-top w-100 d-block card-img-top w-100 card-img-top" alt="..."
+                     style="height: 400px;object-fit: contain;" src="data:image/jpg;base64, @obj.ImageMainBase64" />
                         <div class="card-body">
-                            <h5 class="card-title text-center">@obj.Place.Name</h5>
-                            <p class="card-text" style="text-align:justify">@obj.Place.ShortDescription</p>
-                            <a asp-controller="Object" asp-route-Id="@obj.Place.Id" asp-action="ViewObject" class="btn btn-primary">
-                                Открыть
-                            </a>
+                            <div class="d-flex flex-row align-items-center" style="margin-bottom: 10px;">
+                                <h5 class="card-title" style="width: max-content;padding-bottom: 0px;margin-bottom: 0px;">@obj.Place.Name</h5>
+                                <div class="d-flex flex-row justify-content-center align-items-center align-content-center" style="margin-left: 10px;">
+                                    <span><img height="30" width="30" src="~/images/star.png" /></span>
+                                    <p style="font-weight: bold;margin-bottom: 0px;margin-left: 5px;">@obj.Place.AverageRating</p>
+                                </div>
+                            </div>
+                            <p class="card-text">@obj.Place.ShortDescription</p>
+                        </div>
+                        <div class="card-footer">
+                            @if (User.IsInRole(WC.AdminRole))
+                            {
+                                <div class="d-flex justify-content-around">
+                                    <a asp-controller="Object" asp-route-Id="@obj.Place.Id" asp-action="ViewObject" class="btn btn-primary">
+                                        Перейти
+                                    </a>
+                                    <a asp-controller="Object" asp-route-Id="@obj.Place.Id" asp-action="RemoveObject" class="btn btn-danger">
+                                        Удалить
+                                    </a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="d-flex justify-content-center">
+                                    <a asp-controller="Object" asp-route-Id="@obj.Place.Id" asp-action="ViewObject" class="btn btn-primary">
+                                        Перейти
+                                    </a>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
@@ -40,4 +65,3 @@
         <p>Список пустой</p>
     }
 </div>
-
