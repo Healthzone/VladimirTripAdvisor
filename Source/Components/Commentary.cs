@@ -20,11 +20,12 @@ namespace VladimirTripAdvisor.Components
             foreach (var review in reviews.ToList())
             {
                 var userReview = _db.User.Find(review.UserId);
+                review.ReviewDate = review.ReviewDate.Date;
                 ReviewViewModel reviewView = new ReviewViewModel()
                 {
                     Review = review,
                     Name = userReview.Name,
-                    Surname = userReview.Surname
+                    Surname = userReview.Surname,
                 };
                 reviewViewModels.Add(reviewView);
             }

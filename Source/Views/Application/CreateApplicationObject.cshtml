@@ -70,7 +70,7 @@
                             <span asp-validation-for="AdditionalInfoApplication" class="text-danger"></span>
                         </div>
                         <div class="py-2">
-                            <input asp-for="Images" class="form-control" type="file" id="formFileMultiple" multiple />
+                            <input asp-for="Images" class="form-control" type="file" id="formFileMultiple" multiple accept="image/jpeg" />
                             <span asp-validation-for="Images" class="text-danger"></span>
                         </div>
                     </div>
@@ -85,7 +85,7 @@
 </div>
 <style>
     #marker {
-        background-image: url('/images/geo_pin.png');
+        background-image: url('/images/pin.png');
         width: 32px;
         height: 32px;
         position: absolute;

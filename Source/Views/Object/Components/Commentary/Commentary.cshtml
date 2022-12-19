@@ -5,18 +5,21 @@
     <div style="height: auto;border-top: 1px solid rgba(55,57,59,0.48);margin-bottom: 20px;">
         <div class="d-flex justify-content-between" style="width: 100%;height: 35px;border-color: var(--bs-purple);margin-top: 15px;">
             <div class="d-flex flex-row" style="height: 32px;width: auto;">
-                <span style="width: 32px;height: 32px;"><img style="width: 100%;height: 100%;" /></span>
+                <span style="width: 32px;height: 32px;"><img src="~/images//user.png" style="width: 100%;height: 100%;" /></span>
                 <p class="d-flex justify-content-center align-items-center align-content-center" style="height: 100%;padding-left: 7px;padding-right: 7px;margin-bottom: 0px;">@review.Name @review.Surname.Substring(0,1)</p>
             </div>
-            <div class="d-flex justify-content-center align-items-center" style="width: 69px;">
-                <button class="d-flex justify-content-start align-items-center" type="button"
+            @if (User.IsInRole(WC.AdminRole))
+            {
+                <div class="d-flex justify-content-center align-items-center" style="width: 69px;">
+                    <button class="d-flex justify-content-start align-items-center" type="button"
                     data-bs-toggle="modal" data-bs-target="#removeReviewModal_@review.Review.Id"
                     style="height: 100%;font-weight: bold;font-size: 34px; border-style:none; border-radius: 0px;">
-                    <strong>
-                        <span style="color:red;"><i class="fa-solid fa-trash"></i></span>
-                    </strong>
-                </button>
-            </div>
+                        <strong>
+                            <span style="color:red;"><i class="fa-solid fa-trash"></i></span>
+                        </strong>
+                    </button>
+                </div>
+            }
         </div>
         <div style="margin-top: 16px;">
             <span>
@@ -66,14 +69,17 @@
     <div id="removeReviewModal_@review.Review.Id" class="modal fade" role="dialog" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-body">
-                    <p>Удалить отзыв?</p>
+                <div class="modal-body d-flex justify-content-center align-items-center align-content-center">
+                    <p class="text-center" style="padding-bottom: 0px;margin-bottom: 0px; font-size:20px;">Удалить отзыв?</p>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-light" type="button" data-bs-dismiss="modal">Нет</button>
-                    <form>
-                        <button class="btn btn-primary" type="submit" asp-controller="Review" asp-action="RemoveReview" asp-route-Id="@review.Review.Id">Да</button>
-                    </form>
+                    <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Нет</button>
+                    <button class="btn btn-danger">
+                        <a asp-route-reviewId="@review.Review.Id" asp-route-objectId="@review.Review.ObjectId"
+                       asp-controller="Review" asp-action="RemoveReview" style="color: #ffffff; text-decoration:none">
+                            Да
+                        </a>
+                    </button>
                 </div>
             </div>
         </div>

@@ -56,19 +56,35 @@
             <div class="col order-first order-lg-last order-xl-last order-xxl-last col-md" style="height: auto;">
                 <div id="carousel-1" class="carousel slide" data-bs-ride="false" style="width: 100%;">
                     <div class="carousel-inner">
-                        <div class="carousel-item active"><img class="w-100 d-block" src="data:image/jpg;base64, @Model.Images.First()" alt="Slide Image" style="height: 450px; width:750px" /></div>
+                        <div class="carousel-item active">
+                            <img class="w-100 d-block" src="data:image/jpg;base64, @Model.Images.First()" alt="Slide Image"
+                                 style="object-fit: contain;object-position: center;overflow: hidden;height: 550px;" />
+                        </div>
                         @for (int i = 1; i < Model.Images.Count; i++)
                         {
-                            <div class="carousel-item" data-bs-interval="">
-                                <img class="w-100 d-block" src="data:image/jpg;base64, @Model.Images[i]" alt="Slide Image" style="height: 450px; width:750px" />
+                            <div class="carousel-item">
+                                <img class="w-100 d-block" src="data:image/jpg;base64, @Model.Images[i]" alt="Slide Image"
+                                 style="object-fit: contain;object-position: center;overflow: hidden;height: 550px;" />
                             </div>
                         }
                     </div>
-                    <div><a class="carousel-control-prev" href="#carousel-1" role="button" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span><span class="visually-hidden">Previous</span></a><a class="carousel-control-next" href="#carousel-1" role="button" data-bs-slide="next"><span class="carousel-control-next-icon"></span><span class="visually-hidden">Next</span></a></div>
+                    <div>
+                        <a class="carousel-control-prev" href="#carousel-1" role="button" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carousel-1" role="button" data-bs-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                            <span class="visually-hidden">Next</span>
+                        </a>
+                    </div>
                 </div>
                 <div class="row g-0" style="padding-top: 30px;height: auto;width: 100%;padding-bottom: 30px;">
                     <div class="col d-flex" style="padding-top: 0px;width: 100%;height: 100%;">
-                        <div class="d-flex justify-content-center align-items-center" style="height: 100%;width: 100%;"><img src="screen0.png" style="height: 400px;width: 100%;" /></div>
+                        <div class="d-flex justify-content-center align-items-center" style="height: 100%;width: 100%;">
+                            <div id="map" style="height: 400px;width: 100%;">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -102,13 +118,6 @@
                             </div>
                             <label class="form-label" style="font-weight: bold;">Ваша оценка:</label>
                             <select asp-for="reviewModel.Score" class="form-control" asp-items="Html.GetEnumSelectList<ReviewScore>()"></select>
-                            @*<select class="form-select" required>
-                            <option value="5" selected>Отлично</option>
-                            <option value="4">Нормально</option>
-                            <option value="3">Средне</option>
-                            <option value="2">Плохо</option>
-                            <option value="1">Ужасно</option>
-                            </select>*@
                         </div>
                         <div class="modal-footer">
                             <button class="btn btn-light" type="button" data-bs-dismiss="modal">Закрыть</button>
@@ -123,7 +132,40 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru-RU&amp;apikey=2901eb02-0489-4004-96be-a5b85aaa9984" type="text/javascript"></script>
+<script type="text/javascript">
+    ymaps.ready(function () {
+        var myMap = new ymaps.Map('map', {
+            center: [@Model.Place.Latitude, @Model.Place.Longitude],
+            zoom: 16
+        }, {
+            searchControlProvider: 'yandex#search'
+        }),
 
+            // Создаём макет содержимого.
+            MyIconContentLayout = ymaps.templateLayoutFactory.createClass(
+                '<div style="color: #AAAAAA; font-weight: bold;">$[properties.iconContent]</div>'
+            ),
+
+            myPlacemark = new ymaps.Placemark(myMap.getCenter(), {
+
+            }, {
+                iconLayout: 'default#image',
+                // Своё изображение иконки метки.
+                iconImageHref: 'https://localhost:7048/images/pin.png',
+                // Размеры метки.
+                iconImageSize: [32, 32],
+            });
+        myMap.controls.remove('searchControl');
+        myMap.controls.remove('geolocationControl');
+        myMap.controls.remove('trafficControl');
+        myMap.controls.remove('fullscreenControl');
+        myMap.controls.remove('rulerControl');
+        myMap.controls.remove('typeSelector');
+        myMap.geoObjects
+            .add(myPlacemark)
+    });
+</script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/js/btn_readmore.js"></script>
 

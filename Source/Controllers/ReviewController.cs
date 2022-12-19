@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol.Plugins;
+using System.Collections;
 
 namespace VladimirTripAdvisor.Controllers
 {
@@ -28,7 +29,7 @@ namespace VladimirTripAdvisor.Controllers
             return RedirectToAction("ViewObject", "Object", new {id = reviewModel.ObjectId});
         }
 
-        private void UpdateAverageObjectRating(long placeId)
+        private void UpdateAverageObjectRating(long? placeId)
         {
             var placeReviews = _db.Review.Where(x => x.ObjectId == placeId);
             float averageRating = 0;
@@ -43,6 +44,29 @@ namespace VladimirTripAdvisor.Controllers
             place.AverageRating = averageRating;
             _db.Update(place);
             _db.SaveChanges();
+        }
+        [HttpGet]
+        public IActionResult RemoveReview(long? reviewId, long? objectId)
+        {
+            if (reviewId == null || objectId == null)
+            {
+                return NotFound();
+            }
+
+            ReviewModel? review = _db.Review.Find(reviewId);
+
+            if (review == null)
+            {
+                return NotFound();
+            }
+
+            _db.Remove(review);
+            _db.SaveChanges();
+
+            UpdateAverageObjectRating(objectId);
+
+            return RedirectToAction("ViewObject", "Object", new { id = objectId });
+
         }
     }
 }
