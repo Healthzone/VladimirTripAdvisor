@@ -6,7 +6,7 @@ namespace VladimirTripAdvisor.Models
     {
         public ReviewModel()
         {
-            ReviewDate = DateOnly.FromDateTime(DateTime.Now);
+            ReviewDate = DateTime.Now;
         }
 
         [Key]
@@ -26,7 +26,7 @@ namespace VladimirTripAdvisor.Models
         public ReviewScore Score { get; set; }
 
         [Column("review_date")]
-        public DateOnly ReviewDate { get; set; }
+        public DateTime ReviewDate { get; set; }
 
         [Column("id_object")]
         public long ObjectId { get; set; }
