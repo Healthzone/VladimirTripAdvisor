@@ -75,7 +75,6 @@ namespace VladimirTripAdvisor.Logic.Telegram
             using (var client = new WTelegram.Client(Config))
             {
                 await client.ConnectAsync();
-                //var dialogs = await client.Messages_GetAllDialogs();
 
                 var users = new InputUser[1];
                 for (int i = 0; i < users.Length; i++)
@@ -88,7 +87,6 @@ namespace VladimirTripAdvisor.Logic.Telegram
                 var telegraMessage = await client.Messages_SendMessage(new InputPeerChat(chatId), $"Приветствую. Спасибо что присоединилсь к мероприятию." +
                     $"\nЦель посещения: {placeName}\nДата посещения: {startDate}\nВпрочем, время и дату посещения вы всегда можете сами обсудить" +
                     $"\nПосле посещения места, пожалуйста, оставьте отзыв по ссылке сообщением ниже:", new Random().NextInt64());
-
                 await client.Messages_SendMessage(new InputPeerChat(chatId), $"https://localhost:7048/Object/ViewObject/{placeId}", new Random().NextInt64());
 
                 await client.Messages_UpdatePinnedMessage(new InputPeerChat(chatId), (telegraMessage.UpdateList.First() as TL.UpdateMessageID).id);
