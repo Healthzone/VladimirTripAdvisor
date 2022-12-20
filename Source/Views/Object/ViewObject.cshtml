@@ -42,6 +42,12 @@
                         <strong>Оставить отзыв</strong>
                     </button>
                 </div>
+                <div class="col-auto col-lg-auto d-flex d-xxl-flex align-items-center justify-content-xxl-center" style="width: auto;">
+                    <button class="btn btn-success d-flex justify-content-center align-items-center" type="button" style="height: 40px;" data-bs-target="#CreateEventModal" data-bs-toggle="modal">
+                        <strong>Организовать встречу</strong>
+                    </button>
+                </div>
+
             }
         </div>
         <div class="row d-flex flex-column align-content-center flex-sm-column flex-md-column flex-lg-row flex-xl-row flex-xxl-row" style="padding-left: 0px;padding-top: 20px;height: auto;width: 100%;">
@@ -103,25 +109,68 @@
                     </div>
                     <form method="post">
                         <div class="modal-body">
-
-                            <input asp-for="reviewModel.UserId" class="form-control form-control-sm" hidden type="text" value="@UserManager.GetUserId(User)" />
-                            <input asp-for="reviewModel.ObjectId" class="form-control form-control-sm" hidden type="text" value="@Model.Place.Id" />
+                            <input asp-for="ReviewModel.UserId" class="form-control form-control-sm" hidden type="text" value="@UserManager.GetUserId(User)" />
+                            <input asp-for="ReviewModel.ObjectId" class="form-control form-control-sm" hidden type="text" value="@Model.Place.Id" />
                             <div style="margin-bottom: 10px;">
                                 <label class="form-label" style="font-weight: bold;">Название:</label>
-                                <input asp-for="reviewModel.ReviewName" class="form-control form-control-sm" type="text" />
-                                <span asp-validation-for="reviewModel.ReviewName" class="text-danger"></span>
+                                <input asp-for="ReviewModel.ReviewName" class="form-control form-control-sm" type="text" />
+                                <span asp-validation-for="ReviewModel.ReviewName" class="text-danger"></span>
                             </div>
                             <div style="margin-bottom: 10px;">
                                 <label class="form-label" style="font-weight: bold;">Опишите Ваши впечатления о посещенном месте:</label>
-                                <textarea asp-for="reviewModel.ReviewDescription" class="form-control" rows="4"></textarea>
-                                <span asp-validation-for="reviewModel.ReviewDescription" class="text-danger"></span>
+                                <textarea asp-for="ReviewModel.ReviewDescription" class="form-control" rows="4"></textarea>
+                                <span asp-validation-for="ReviewModel.ReviewDescription" class="text-danger"></span>
                             </div>
                             <label class="form-label" style="font-weight: bold;">Ваша оценка:</label>
-                            <select asp-for="reviewModel.Score" class="form-control" asp-items="Html.GetEnumSelectList<ReviewScore>()"></select>
+                            <select asp-for="ReviewModel.Score" class="form-control" asp-items="Html.GetEnumSelectList<ReviewScore>()"></select>
                         </div>
                         <div class="modal-footer">
                             <button class="btn btn-light" type="button" data-bs-dismiss="modal">Закрыть</button>
                             <button asp-controller="Review" asp-action="AddReview" class="btn btn-primary" type="submit">Готово</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="CreateEventModal" class="modal fade" role="dialog" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header d-flex">
+                        <h4 class="modal-title">Создание мероприятия</h4>
+                    </div>
+                    <form method="post">
+                        <input asp-for="Place.Id" class="form-control" hidden type="text" style="margin-bottom: 0px;" />
+                        <input asp-for="ReviewModel.UserId" class="form-control form-control-sm" hidden type="text" value="@UserManager.GetUserId(User)" />
+                        <div class="modal-body">
+                            <p style="text-align: justify;">После создания мероприятия Вам будет выдана ссылка приглашение в чат Телеграм, куда потом подключатся другие пользователи или вы можете пригласить сами, отправив им ссылку</p>
+                            <div style="margin-bottom: 15px;">
+                                <p style="margin-bottom: 6px;">Название мероприятия:</p>
+                                <input asp-for="ReviewModel.ReviewName" class="form-control" type="text" style="margin-bottom: 0px;" />
+                                <span asp-validation-for="ReviewModel.ReviewName" class="text-danger"></span>
+                            </div>
+                            <div style="margin-bottom: 15px;">
+                                <p style="margin-bottom: 6px;">Описание мероприятия</p>
+                                <textarea asp-for="ReviewModel.ReviewDescription" rows="4" class="form-control" type="text" style="margin-bottom: 0px;" >
+                                    </textarea>
+                                <span asp-validation-for="ReviewModel.ReviewDescription" class="text-danger"></span>
+                            </div>
+                            <div style="margin-bottom: 15px;">
+                                <p style="margin-bottom: 6px;">Доступ к мероприятию</p>
+                                <select asp-for="EventModel.EventType" class="form-control" asp-items="Html.GetEnumSelectList<EventType>()"></select>
+                            </div>
+                            <div style="margin-bottom: 15px;">
+                                <p style="margin-bottom: 6px;">Дата начала мероприятия</p>
+                                <input asp-for="ReviewModel.ReviewDate" class="form-control" type="datetime-local" style="margin-bottom: 0px;" />
+                                <span asp-validation-for="ReviewModel.ReviewDate" class="text-danger" ></span>
+                            </div>
+                            @*                            <div style="margin-bottom: 15px;">
+                            <p style="margin-bottom: 6px;">Дата окончания мероприятия</p><input class="form-control form-control" type="datetime-local" style="margin-bottom: 0px;" />
+                            <p class="text-danger" ></p>
+                            </div>*@
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-light" type="button" data-bs-dismiss="modal">Отмена</button>
+                            <button asp-action="CreateEvent" asp-controller="Event" class="btn btn-primary" type="submit">Создать</button>
                         </div>
                     </form>
                 </div>

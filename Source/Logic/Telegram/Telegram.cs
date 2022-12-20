@@ -5,7 +5,7 @@ using WTelegram;
 
 namespace VladimirTripAdvisor.Logic.Telegram
 {
-    public static class TelegramGroup
+    public class Telegram
     {
         private static string Config(string what)
         {
@@ -21,12 +21,12 @@ namespace VladimirTripAdvisor.Logic.Telegram
                 default: return null;                  // let WTelegramClient decide the default config
             }
         }
-        public static void InitialiseTelegramClient()
+        public void InitialiseTelegramClient()
         {
             using var client = new WTelegram.Client(Config);
         }
 
-        public static async void TelegramTest()
+        public async void TelegramTest()
         {
             using (var client = new WTelegram.Client(Config))
             {
@@ -45,6 +45,25 @@ namespace VladimirTripAdvisor.Logic.Telegram
                 string message = Console.ReadLine();
                 Console.WriteLine($"Sending a message in chat {contactsId}: {target.first_name} {target.last_name}");
                 await client.SendMessageAsync(target, message);
+            }
+        }
+
+        public async void CreateTelegramChannel()
+        {
+            using (var client = new WTelegram.Client(Config))
+            {
+                await client.ConnectAsync();
+                var dialogs = await client.Messages_GetAllDialogs();
+
+                //var channel = await client.Channels_CreateChannel("Мероприятие1", "Это мероприятие", false);
+                //var user = client.Users_GetFullUser(new InputUser(878424347, 878424347));
+                //user.RunSynchronously();
+                var users = new InputUser[1];
+                for (int i = 0; i < users.Length; i++)
+                {
+                    users[i] = new InputUser(5802032660, -1117118480243990476);
+                }   
+                //var channel = await client.Messages_CreateChat(users, "Тестовое мероприятие2");
             }
         }
     }

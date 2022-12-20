@@ -43,7 +43,9 @@ app.UseEndpoints(endpoints =>
     pattern: "{controller=Home}/{action=Index}/{id?}");
 });
 
-TelegramGroup.InitialiseTelegramClient();
-//TelegramGroup.TelegramTest();
+//Telegram.InitialiseTelegramClient();
+//Telegram.TelegramTest();
+//new Telegram().CreateTelegramChannel();
+
 
 app.Run();

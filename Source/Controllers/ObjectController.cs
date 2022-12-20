@@ -72,5 +72,25 @@ namespace VladimirTripAdvisor.Controllers
             }
             return View(objectVM);
         }
+
+        public IActionResult RemoveObject(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            ObjectOfVisitModel? place = _db.ObjectOfVisit.Find(id);
+
+            if(place == null)
+            {
+                return BadRequest();
+            }
+            _db.ObjectOfVisit.Remove(place);
+            _db.SaveChanges();
+
+            return RedirectToAction("AllObjects");
+
+        }
     }
 }
