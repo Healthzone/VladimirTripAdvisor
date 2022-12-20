@@ -5,6 +5,14 @@
         [Key]
         public long Id { get; set; }
 
+        [Column("name")]
+        [StringLength(maximumLength: 50)]
+        public string Name { get; set; }
+
+        [Column("description")]
+        [StringLength(maximumLength: 500)]
+        public string Description { get; set; }
+
         [Column("start_date")]
         public DateTime StartDate { get; set; }
 
