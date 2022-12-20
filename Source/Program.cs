@@ -45,7 +45,7 @@ app.UseEndpoints(endpoints =>
 
 //Telegram.InitialiseTelegramClient();
 //Telegram.TelegramTest();
-//new Telegram().CreateTelegramChannel();
+//new Telegram().TestMethod();
 
 
 app.Run();

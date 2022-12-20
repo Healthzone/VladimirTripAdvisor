@@ -48,7 +48,7 @@ namespace VladimirTripAdvisor.Logic.Telegram
             }
         }
 
-        public async void CreateTelegramChannel()
+        public async void TestMethod()
         {
             using (var client = new WTelegram.Client(Config))
             {
@@ -63,7 +63,39 @@ namespace VladimirTripAdvisor.Logic.Telegram
                 {
                     users[i] = new InputUser(5802032660, -1117118480243990476);
                 }   
-                //var channel = await client.Messages_CreateChat(users, "Тестовое мероприятие2");
+                var chat = await client.Messages_CreateChat(users, "Тестовое мероприятие2");
+                long chatId = chat.Chats.First().Value.ID;
+
+                ChatInviteExported exportedChatInvite = (ChatInviteExported)await client.Messages_ExportChatInvite(new InputPeerChat(chatId));
+            }
+        }
+
+        public async Task<string> CreateTelegramChannel(string channelName, DateTime startDate, string placeName, long placeId)
+        {
+            using (var client = new WTelegram.Client(Config))
+            {
+                await client.ConnectAsync();
+                //var dialogs = await client.Messages_GetAllDialogs();
+
+                var users = new InputUser[1];
+                for (int i = 0; i < users.Length; i++)
+                {
+                    users[i] = new InputUser(5802032660, -1117118480243990476);
+                }
+                var chat = await client.Messages_CreateChat(users, channelName);
+                long chatId = chat.Chats.First().Value.ID;
+
+                var telegraMessage = await client.Messages_SendMessage(new InputPeerChat(chatId), $"Приветствую. Спасибо что присоединилсь к мероприятию." +
+                    $"\nЦель посещения: {placeName}\nДата посещения: {startDate}\nВпрочем, время и дату посещения вы всегда можете сами обсудить" +
+                    $"\nПосле посещения места, пожалуйста, оставьте отзыв по ссылке сообщением ниже:", new Random().NextInt64());
+
+                await client.Messages_SendMessage(new InputPeerChat(chatId), $"https://localhost:7048/Object/ViewObject/{placeId}", new Random().NextInt64());
+
+                await client.Messages_UpdatePinnedMessage(new InputPeerChat(chatId), (telegraMessage.UpdateList.First() as TL.UpdateMessageID).id);
+
+                ChatInviteExported exportedChatInvite = (ChatInviteExported)await client.Messages_ExportChatInvite(new InputPeerChat(chatId));
+
+                return exportedChatInvite.link;
             }
         }
     }

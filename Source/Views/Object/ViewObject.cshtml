@@ -139,20 +139,20 @@
                         <h4 class="modal-title">Создание мероприятия</h4>
                     </div>
                     <form method="post">
-                        <input asp-for="Place.Id" class="form-control" hidden type="text" style="margin-bottom: 0px;" />
-                        <input asp-for="ReviewModel.UserId" class="form-control form-control-sm" hidden type="text" value="@UserManager.GetUserId(User)" />
+                        <input asp-for="EventModel.PlaceId" class="form-control" hidden type="text" style="margin-bottom: 0px;" value="@Model.Place.Id" />
+                        <input asp-for="EventModel.CreatorId" class="form-control form-control-sm" hidden type="text" value="@UserManager.GetUserId(User)" />
                         <div class="modal-body">
                             <p style="text-align: justify;">После создания мероприятия Вам будет выдана ссылка приглашение в чат Телеграм, куда потом подключатся другие пользователи или вы можете пригласить сами, отправив им ссылку</p>
                             <div style="margin-bottom: 15px;">
                                 <p style="margin-bottom: 6px;">Название мероприятия:</p>
-                                <input asp-for="ReviewModel.ReviewName" class="form-control" type="text" style="margin-bottom: 0px;" />
-                                <span asp-validation-for="ReviewModel.ReviewName" class="text-danger"></span>
+                                <input asp-for="EventModel.Name" class="form-control" type="text" style="margin-bottom: 0px;" />
+                                <span asp-validation-for="EventModel.Name" class="text-danger"></span>
                             </div>
                             <div style="margin-bottom: 15px;">
                                 <p style="margin-bottom: 6px;">Описание мероприятия</p>
-                                <textarea asp-for="ReviewModel.ReviewDescription" rows="4" class="form-control" type="text" style="margin-bottom: 0px;" >
+                                <textarea asp-for="EventModel.Description" rows="4" class="form-control" type="text" style="margin-bottom: 0px;" >
                                     </textarea>
-                                <span asp-validation-for="ReviewModel.ReviewDescription" class="text-danger"></span>
+                                <span asp-validation-for="EventModel.Description" class="text-danger"></span>
                             </div>
                             <div style="margin-bottom: 15px;">
                                 <p style="margin-bottom: 6px;">Доступ к мероприятию</p>
@@ -160,8 +160,8 @@
                             </div>
                             <div style="margin-bottom: 15px;">
                                 <p style="margin-bottom: 6px;">Дата начала мероприятия</p>
-                                <input asp-for="ReviewModel.ReviewDate" class="form-control" type="datetime-local" style="margin-bottom: 0px;" />
-                                <span asp-validation-for="ReviewModel.ReviewDate" class="text-danger" ></span>
+                                <input asp-for="EventModel.StartDate" class="form-control" type="datetime-local" style="margin-bottom: 0px;" />
+                                <span asp-validation-for="EventModel.StartDate" class="text-danger" ></span>
                             </div>
                             @*                            <div style="margin-bottom: 15px;">
                             <p style="margin-bottom: 6px;">Дата окончания мероприятия</p><input class="form-control form-control" type="datetime-local" style="margin-bottom: 0px;" />
