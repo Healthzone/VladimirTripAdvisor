@@ -14,18 +14,19 @@ namespace VladimirTripAdvisor.Models
 
         [Column("review_name")]
         [StringLength(maximumLength: 50)]
-        [Required(ErrorMessage = "Это поле обязательно для заполнения")]
+        [Required(ErrorMessage = "Данное поле обязательно")]
         public string ReviewName { get; set; }
 
         [Column("review_description")]
         [StringLength(maximumLength:1000)]
-        [Required(ErrorMessage ="Это поле обязательно для заполнения")] 
+        [Required(ErrorMessage ="Данное поле обязательно")] 
         public string ReviewDescription { get; set; }
 
         [Column("score")]
         public ReviewScore Score { get; set; }
 
         [Column("review_date")]
+        [Required(ErrorMessage ="Данное поле обязательно")]
         public DateTime ReviewDate { get; set; }
 
         [Column("id_object")]

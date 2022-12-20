@@ -11,6 +11,9 @@
         [Column("end_date")]
         public DateTime EndDate { get; set; }
 
+        [Column("event_type")]
+        public EventType EventType { get; set; }
+
         [Column("telegram_link")]
         [StringLength(maximumLength:500)]
         public string TelegramLink { get; set; }
