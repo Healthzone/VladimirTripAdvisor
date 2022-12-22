@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections;
+using System.Security.Claims;
+using VladimirTripAdvisor.Logic.YandexMap;
 using VladimirTripAdvisor.Models;
 using VladimirTripAdvisor.ViewModels;
 
@@ -10,9 +12,11 @@ namespace VladimirTripAdvisor.Controllers
     {
 
         private readonly ApplicationDbContext _db;
-        public ObjectController(ApplicationDbContext db)
+        private readonly IWebHostEnvironment _hostEnvironment;
+        public ObjectController(ApplicationDbContext db, IWebHostEnvironment hostEnvironment)
         {
             _db = db;
+            _hostEnvironment = hostEnvironment;
         }
 
 
@@ -34,6 +38,25 @@ namespace VladimirTripAdvisor.Controllers
         {
 
             IList<ObjectOfVisitModel> objectList = _db.ObjectOfVisit.ToList();
+            IList<ObjectWithPhotoViewModel> objectVM = new List<ObjectWithPhotoViewModel>();
+
+            foreach (var item in objectList)
+            {
+                ImageModel imgByte = await _db.Image.FirstOrDefaultAsync(x => x.ObjectId == item.Id);
+                var obj = new ObjectWithPhotoViewModel()
+                {
+                    Place = item,
+                    ImageMainBase64 = Convert.ToBase64String(imgByte.ImageByte)
+                };
+                objectVM.Add(obj);
+            }
+            return View(objectVM);
+        }
+
+        public async Task<IActionResult> ViewMyObjects()
+        {
+
+            IList<ObjectOfVisitModel> objectList = _db.ObjectOfVisit.Where(x=>x.IdOwner == User.FindFirstValue(ClaimTypes.NameIdentifier)).ToList();
             IList<ObjectWithPhotoViewModel> objectVM = new List<ObjectWithPhotoViewModel>();
 
             foreach (var item in objectList)
