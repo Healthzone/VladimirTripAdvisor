@@ -33,7 +33,10 @@
                                 <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Создать администратора</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Application" asp-action="CheckApplication">Список заявок на апгрейд</a>
+                                <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="CheckApplication">Список заявок</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="AllUsers">Список пользователей</a>
                             </li>
                         }
                         @if (User.IsInRole(WC.UserRole) && !User.IsInRole(WC.OwnerRole))
@@ -47,6 +50,10 @@
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="Application" asp-action="MyApplicationAccount">Список моих заявок</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Event" asp-action="AllEvents">Список встреч</a>
                             </li>
                         }
                         @if (User.IsInRole(WC.OwnerRole))

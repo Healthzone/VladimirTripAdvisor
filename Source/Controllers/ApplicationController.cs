@@ -11,6 +11,7 @@ using System.Security.Claims;
 using System.Xml.Linq;
 using VladimirTripAdvisor.Logic.Application;
 using VladimirTripAdvisor.Logic.ImageHandler;
+using VladimirTripAdvisor.Logic.YandexMap;
 using VladimirTripAdvisor.Models;
 using VladimirTripAdvisor.ViewModels;
 
@@ -22,10 +23,12 @@ namespace VladimirTripAdvisor.Controllers
 
         private readonly ApplicationDbContext _db;
         private readonly UserManager<IdentityUser> _userManager;
-        public ApplicationController(ApplicationDbContext db, RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
+        private readonly IWebHostEnvironment _hostEnvironment;
+        public ApplicationController(ApplicationDbContext db, RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager, IWebHostEnvironment hostEnvironment)
         {
             _db = db;
             _userManager = userManager;
+            _hostEnvironment = hostEnvironment;
         }
         public IActionResult Index()
         {
@@ -234,12 +237,7 @@ namespace VladimirTripAdvisor.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [Authorize(Roles = WC.AdminRole)]
-        public IActionResult CheckApplication()
-        {
-            IEnumerable<ApplicationModelDB> apps = _db.Application.Include(x => x.User);
-            return View(apps);
-        }
+
 
         public IActionResult ViewApplication(long? id)
         {
@@ -321,7 +319,7 @@ namespace VladimirTripAdvisor.Controllers
             _db.Application.Update(application);
             _db.SaveChanges();
 
-            return RedirectToAction("CheckApplication");
+            return RedirectToAction("CheckApplication", "Admin");
         }
 
         [HttpPost]
@@ -353,7 +351,7 @@ namespace VladimirTripAdvisor.Controllers
             _db.Application.Update(application);
             await _db.SaveChangesAsync();
 
-            return RedirectToAction("CheckApplication");
+            return RedirectToAction("CheckApplication", "Admin");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -380,7 +378,7 @@ namespace VladimirTripAdvisor.Controllers
                 (application.ApplicationData, ApplicationType.AddObject);
             application.ApplicationStatus = ApplicationStatus.Done;
 
-            if(applicationJsonData == null)
+            if (applicationJsonData == null)
             {
                 return BadRequest();
             }
@@ -397,22 +395,28 @@ namespace VladimirTripAdvisor.Controllers
                 PlaceURL = applicationJsonData.ObjectURL,
                 PlaceType = applicationJsonData.PlaceType,
                 ShortDescription = applicationJsonData.ShortDescription,
-                PhoneNumber= applicationJsonData.PhoneNumber
+                PhoneNumber = applicationJsonData.PhoneNumber,
+                AverageRating = 0
 
             };
             _db.Application.Update(application);
             _db.ObjectOfVisit.Add(place);
             _db.SaveChanges();
 
-            var objectImages = _db.Image.Where(x=>x.ApplicationId == application.Id); 
+            var objectImages = _db.Image.Where(x => x.ApplicationId == application.Id);
             foreach (var item in objectImages)
             {
                 item.ObjectId = place.Id;
             }
             _db.UpdateRange(objectImages);
             _db.SaveChanges();
-            return RedirectToAction("CheckApplication");
-            
+
+            BaloonJson baloonJson = new BaloonJson(_hostEnvironment);
+            baloonJson.AddObject(place, Convert.ToBase64String(objectImages.FirstOrDefault().ImageByte));
+
+            return RedirectToAction("CheckApplication", "Admin");
+
+
         }
 
         [Authorize(Roles = WC.UserRole)]
@@ -446,7 +450,7 @@ namespace VladimirTripAdvisor.Controllers
             _db.Application.Update(applicationModelDB);
             _db.SaveChanges();
 
-            return RedirectToAction("CheckApplication");
+            return RedirectToAction("CheckApplication", "Admin");
         }
         public IActionResult SendOnEditApplicationObject(ApplicationObjectViewModel application)
         {
@@ -471,7 +475,7 @@ namespace VladimirTripAdvisor.Controllers
             _db.Application.Update(applicationModelDB);
             _db.SaveChanges();
 
-            return RedirectToAction("CheckApplication");
+            return RedirectToAction("CheckApplication", "Admin");
         }
     }
 }
