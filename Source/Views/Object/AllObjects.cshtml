@@ -5,8 +5,8 @@
 }
 
 <div class="container">
-    <div class="row pt-4">
-        <div class="col-6">
+    <div class="row pt-4 d-flex justify-content-center">
+        <div class="col-6 d-flex justify-content-center">
             <h2 class="text-primary">Каталог объектов</h2>
         </div>
     </div>
@@ -15,7 +15,7 @@
 
     @if (Model.Count() > 0)
     {
-        <div class="row row-cols-1 row-cols-md-2 g-4">
+        <div class="row row-cols-2 d-flex justify-content-center g-4">
 
             @foreach (var obj in Model)
             {
@@ -23,7 +23,7 @@
                     <div class="card">
                         <img class="img-fluid card-img-top w-100 d-block card-img-top w-100 card-img-top" alt="..."
                      style="height: 400px;object-fit: contain;" src="data:image/jpg;base64, @obj.ImageMainBase64" />
-                        <div class="card-body">
+                        <div class="card-body" style="height:192px">
                             <div class="d-flex flex-row align-items-center" style="margin-bottom: 10px;">
                                 <h5 class="card-title" style="width: max-content;padding-bottom: 0px;margin-bottom: 0px;">@obj.Place.Name</h5>
                                 <div class="d-flex flex-row justify-content-center align-items-center align-content-center" style="margin-left: 10px;">

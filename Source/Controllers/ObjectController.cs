@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections;
+using System.Diagnostics;
 using System.Security.Claims;
 using VladimirTripAdvisor.Logic.YandexMap;
 using VladimirTripAdvisor.Models;
@@ -114,6 +115,17 @@ namespace VladimirTripAdvisor.Controllers
 
             return RedirectToAction("AllObjects");
 
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult Map()
+        {
+            return View();
         }
     }
 }
