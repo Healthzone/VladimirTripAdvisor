@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using VladimirTripAdvisor.Logic.Telegram;
 using VladimirTripAdvisor.Models;
+using VladimirTripAdvisor.ViewModels;
 
 namespace VladimirTripAdvisor.Controllers
 {
@@ -28,6 +29,38 @@ namespace VladimirTripAdvisor.Controllers
             _db.SaveChanges();
 
             return View();
+        }
+
+        public IActionResult AllEvents()
+        {
+            IList<EventModelWithPhotoViewModel> eventList = new List<EventModelWithPhotoViewModel>();
+
+            var events = _db.Event.Where(x => x.EventType == EventType.Public)
+                .Where(x => x.StartDate.CompareTo(DateTime.Now.AddHours(-1)) > 0).ToList();
+
+            foreach (var item in events)
+            {
+                var eventViewModel = new EventModelWithPhotoViewModel();
+                eventViewModel.EventModel = item;
+
+                ImageModel? ImageBase64 = _db.Image.Where(x => x.ObjectId == item.PlaceId).FirstOrDefault();
+                if(ImageBase64 != null)
+                {
+                    eventViewModel.ImageMainBase64 = Convert.ToBase64String(ImageBase64.ImageByte);
+                }
+
+                ObjectOfVisitModel? place = _db.ObjectOfVisit.Find(item.PlaceId);
+
+                if(place != null)
+                {
+                    eventViewModel.PlaceName = place.Name;
+                }
+                eventList.Add(eventViewModel);
+
+            }
+            return View(eventList);
+
+
         }
     }
 }
