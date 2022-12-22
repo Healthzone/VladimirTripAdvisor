@@ -4,36 +4,38 @@
 <h1>@ViewData["Title"]</h1>
 <div id="logreg-forms">
     <h1 class="h3 mb-3 font-weight-normal text-info pt-4" style="text-align:center;">Авторизация</h1>
-            <form id="account" method="post">
-                <input asp-for="Input.Email" type="email" class="mb-1 form-control" />
-                <input asp-for="Input.Password" type="password" class="form-control" />
-                <button type="submit" class="btn btn-success btn-block w-100">Авторизоваться</button>
+    <form id="account" method="post">
+        <input asp-for="Input.Email" type="email" class="mb-1 form-control" />
+        <input asp-for="Input.Password" type="password" class="form-control" />
+        <button type="submit" class="btn btn-success btn-block w-100">Авторизоваться</button>
 
-                <a id="forgot-password" asp-page="./ForgotPassword">Забыли пароль?</a>
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-info text-white">Зарегистрировать аккаунт</a>
-                
-               
-            </form>
+        <a id="forgot-password" asp-page="./ForgotPassword">Забыли пароль?</a>
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-info text-white">Зарегистрировать аккаунт</a>
+
+
+    </form>
 </div>
 <div class="row d-flex justify-content-center text-center">
-        <section>
-            <h3>Это тестовая версия ПС по дисциплине технологии программирования</h3>
-            <hr />
-                <div class="form-text">
-                    <p>Используйте следующие тестовые аккаунты.</p>
-                </div>
-            <div class="form-text ">
-                <p>Админка: <span class="text-danger">admin@admin.ru </span>пароль <span class="text-danger">Admin12345*</span></p>
-            </div>
-            <div class="form-text ">
-                <p>Пользователь с ролью "Владелец" <span class="text-danger">subbotinandrey@gmail.com</span> пароль <span class="text-danger">Subbotin12345*</span></p>
-            </div>
-            <div class="form-text">
-                <p>Простой пользователь: <span class="text-danger">vylegzhanina@gmail.com</span> пароль <span class="text-danger">Liza12345*</span></p>
-            </div>
-        </section>
-    </div>
+    <section>
+        <h3>Это тестовая версия ПС по дисциплине технологии программирования</h3>
+        <hr />
+        <div class="form-text">
+            <p>Используйте следующие тестовые аккаунты.</p>
+        </div>
+        <div class="form-text ">
+            <p>Админка: <span class="text-danger">admin@admin.ru </span>пароль <span class="text-danger">Admin12345*</span></p>
+        </div>
+        <div class="form-text ">
+            <p>Пользователь с ролью "Владелец" <span class="text-danger">subbotinandrey@gmail.com</span> пароль <span class="text-danger">Subbotin12345*</span></p>
+        </div>
+        <div class="form-text">
+            <p>Пользователь с ролью "Владелец" <span class="text-danger">vylegzhanina@gmail.com</span> пароль <span class="text-danger">Liza12345*</span></p>
+        </div>
+        <div class="form-text">
+            <p>Простой пользователь <span class="text-danger">Dmitry@mail.ru</span> пароль <span class="text-danger">Dmitry123*</span></p>
+        </div>
+    </section>
 </div>
 
 @section Scripts {

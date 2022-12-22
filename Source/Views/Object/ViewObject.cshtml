@@ -136,13 +136,13 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header d-flex">
-                        <h4 class="modal-title">Создание мероприятия</h4>
+                        <h4 class="modal-title">Создание встречи</h4>
                     </div>
                     <form method="post">
                         <input asp-for="EventModel.PlaceId" class="form-control" hidden type="text" style="margin-bottom: 0px;" value="@Model.Place.Id" />
                         <input asp-for="EventModel.CreatorId" class="form-control form-control-sm" hidden type="text" value="@UserManager.GetUserId(User)" />
                         <div class="modal-body">
-                            <p style="text-align: justify;">После создания мероприятия Вам будет выдана ссылка приглашение в чат Телеграм, куда потом подключатся другие пользователи или вы можете пригласить сами, отправив им ссылку</p>
+                            <p style="text-align: justify;">После создания встречи Вам будет выдана ссылка приглашение в чат Телеграм, куда потом подключатся другие пользователи или вы можете пригласить сами, отправив им ссылку</p>
                             <div style="margin-bottom: 15px;">
                                 <p style="margin-bottom: 6px;">Название мероприятия:</p>
                                 <input asp-for="EventModel.Name" class="form-control" type="text" style="margin-bottom: 0px;" />

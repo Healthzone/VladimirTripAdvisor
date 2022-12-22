@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using VladimirTripAdvisor.Logic.Telegram;
 using VladimirTripAdvisor.Models;
 using VladimirTripAdvisor.ViewModels;
@@ -28,7 +29,7 @@ namespace VladimirTripAdvisor.Controllers
             _db.Event.Add(eventModel);
             _db.SaveChanges();
 
-            return View();
+            return View("MyEvents");
         }
 
         public IActionResult AllEvents()
@@ -52,6 +53,31 @@ namespace VladimirTripAdvisor.Controllers
                 ObjectOfVisitModel? place = _db.ObjectOfVisit.Find(item.PlaceId);
 
                 if(place != null)
+                {
+                    eventViewModel.PlaceName = place.Name;
+                }
+                eventList.Add(eventViewModel);
+
+            }
+            return View(eventList);
+
+
+        }
+
+        public IActionResult MyEvents()
+        {
+            IList<EventViewModel> eventList = new List<EventViewModel>();
+
+            var events = _db.Event.Where(x => x.CreatorId == User.FindFirstValue(ClaimTypes.NameIdentifier)).ToList();
+
+            foreach (var item in events)
+            {
+                var eventViewModel = new EventViewModel();
+
+                eventViewModel.Event = item;
+                var place = _db.ObjectOfVisit.Find(item.PlaceId);
+
+                if (place != null)
                 {
                     eventViewModel.PlaceName = place.Name;
                 }
