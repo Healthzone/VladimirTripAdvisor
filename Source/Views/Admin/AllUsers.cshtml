@@ -1,0 +1,79 @@
+﻿@model IEnumerable<VladimirTripAdvisor.ViewModels.UserViewModel>
+@{
+    ViewData["Title"] = "AllUsers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Список пользователей</h2>
+        </div>
+    </div>
+
+    <br />
+
+    @if (Model.Count() > 0)
+    {
+        <table class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        Логин
+                    </th>
+                    <th>
+                        Фамилия
+                    </th>
+                    <th>
+                        Имя
+                    </th>
+                    <th>
+                        Тип аккаунта
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model)
+                {
+                    <tr>
+                        <td width="15%">@obj.User.UserName</td>
+                        <td width="15%">@obj.User.Surname</td>
+                        <td width="15%">@obj.User.Name</td>
+                        <td width="15%">@obj.AccountType</td>
+                        <td class="text-center">
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-danger" type="button"
+                                data-bs-toggle="modal" data-bs-target="#deleteUserAccountModal_@obj.User.Id">Удалить аккаунт</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <div id="deleteUserAccountModal_@obj.User.Id" class="modal fade" role="dialog" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body d-flex justify-content-center align-items-center align-content-center">
+                                    <p class="text-center" style="padding-bottom: 0px;margin-bottom: 0px; font-size:20px;">Удалить аккаунт?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Нет</button>
+                                    <button class="btn btn-danger">
+                                        <a asp-route-userId="@obj.User.Id" asp-controller="Admin" asp-action="DeleteUser" style="color: #ffffff; text-decoration:none">
+                                            Да
+                                        </a>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Список пустой</p>
+    }
+
+</div>
+
+
