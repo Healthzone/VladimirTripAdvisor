@@ -26,50 +26,6 @@ namespace VladimirTripAdvisor.Logic.Telegram
             using var client = new WTelegram.Client(Config);
         }
 
-        public async void TelegramTest()
-        {
-            using (var client = new WTelegram.Client(Config))
-            {
-                await client.ConnectAsync();
-
-                var contacts = await client.Contacts_GetContacts();
-                Console.WriteLine("This user has joined the following:");
-                foreach (var users in contacts.users)
-                {
-                    Console.WriteLine($"{users.Key}: {users.Value}");
-                }
-                Console.Write("Type a chat ID to send a message: ");
-                long contactsId = long.Parse(Console.ReadLine());
-                var target = contacts.users[contactsId];
-                Console.Write("Message: ");
-                string message = Console.ReadLine();
-                Console.WriteLine($"Sending a message in chat {contactsId}: {target.first_name} {target.last_name}");
-                await client.SendMessageAsync(target, message);
-            }
-        }
-
-        public async void TestMethod()
-        {
-            using (var client = new WTelegram.Client(Config))
-            {
-                await client.ConnectAsync();
-                var dialogs = await client.Messages_GetAllDialogs();
-
-                //var channel = await client.Channels_CreateChannel("Мероприятие1", "Это мероприятие", false);
-                //var user = client.Users_GetFullUser(new InputUser(878424347, 878424347));
-                //user.RunSynchronously();
-                var users = new InputUser[1];
-                for (int i = 0; i < users.Length; i++)
-                {
-                    users[i] = new InputUser(5802032660, -1117118480243990476);
-                }   
-                var chat = await client.Messages_CreateChat(users, "Тестовое мероприятие2");
-                long chatId = chat.Chats.First().Value.ID;
-
-                ChatInviteExported exportedChatInvite = (ChatInviteExported)await client.Messages_ExportChatInvite(new InputPeerChat(chatId));
-            }
-        }
-
         public async Task<string> CreateTelegramChannel(string channelName, DateTime startDate, string placeName, long placeId)
         {
             using (var client = new WTelegram.Client(Config))

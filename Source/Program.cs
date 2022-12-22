@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using VladimirTripAdvisor.Data;
 using VladimirTripAdvisor.Logic.Telegram;
+using VladimirTripAdvisor.Logic.YandexMap;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,10 +43,5 @@ app.UseEndpoints(endpoints =>
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 });
-
-//Telegram.InitialiseTelegramClient();
-//Telegram.TelegramTest();
-//new Telegram().TestMethod();
-
 
 app.Run();
