@@ -1,9 +1,5 @@
-﻿using Microsoft.AspNetCore.Components.Web;
-using NuGet.Protocol.Plugins;
-using System.IO;
-using System.Text;
+﻿using System.Text;
 using VladimirTripAdvisor.Logic.YandexMap.JsonModel;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace VladimirTripAdvisor.Logic.YandexMap
 {
